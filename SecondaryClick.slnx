@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/WindowsInput/WindowsInput.csproj" />
+  <Project Path="src/MouseKeyHook/MouseKeyHook.csproj" />
+  <Project Path="src/SecondaryClick/SecondaryClick.csproj" />
+</Solution>
