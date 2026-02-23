@@ -16,12 +16,10 @@
 
   <ItemGroup>
     <None Remove="*.ico"/>
-    <None Remove="*.png"/>
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="*.ico"/>
-    <Resource Include="*.png"/>
   </ItemGroup>
 
   <ItemGroup>
