@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFrameworks>net7.0-windows;net6.0-windows;net472;net48</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyTitle>MouseKeyHook</AssemblyTitle>
+    <AssemblyName>System.MouseKeyHook</AssemblyName>
+    <Version>5.7.1</Version>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>System.MouseKeyHook</RootNamespace>
+  </PropertyGroup>
+</Project>
