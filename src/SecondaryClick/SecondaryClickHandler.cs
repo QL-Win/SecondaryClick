@@ -1,6 +1,5 @@
 ﻿using System.WindowsInput;
 using System.MouseKeyHook;
-using System.Runtime.InteropServices;
 using System.WindowsInput.WinApi;
 using System.MouseKeyHook.WinApi;
 
@@ -229,7 +228,7 @@ public sealed class SecondaryClickHandler : IDisposable
 
     private static bool IsKeyDown(int virtualKey)
     {
-        return (GetAsyncKeyState(virtualKey) & 0x8000) != 0;
+        return (WinApi.User32.GetAsyncKeyState(virtualKey) & 0x8000) != 0;
     }
 
     private void InjectAltKeyUp(Keys keyCode)
@@ -261,7 +260,4 @@ public sealed class SecondaryClickHandler : IDisposable
             }
         });
     }
-
-    [DllImport("user32.dll")]
-    private static extern short GetAsyncKeyState(int vKey);
 }
