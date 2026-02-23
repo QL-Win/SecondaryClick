@@ -2,20 +2,33 @@
 
 namespace System.WindowsInput;
 
+/// <summary>
+/// Implementation of <see cref="IMouseSimulator"/> for simulating mouse input on Windows platform.
+/// </summary>
 public class MouseSimulator : IMouseSimulator
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MouseSimulator"/> class.
+    /// </summary>
+    /// <param name="inputSimulator">The input simulator instance.</param>
     public MouseSimulator(IInputSimulator inputSimulator)
     {
         _inputSimulator = inputSimulator ?? throw new ArgumentNullException(nameof(inputSimulator));
         _messageDispatcher = new WindowsInputMessageDispatcher();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MouseSimulator"/> class with a custom dispatcher.
+    /// </summary>
+    /// <param name="inputSimulator">The input simulator instance.</param>
+    /// <param name="messageDispatcher">The input message dispatcher.</param>
     internal MouseSimulator(IInputSimulator inputSimulator, IInputMessageDispatcher messageDispatcher)
     {
         _inputSimulator = inputSimulator ?? throw new ArgumentNullException(nameof(inputSimulator));
         _messageDispatcher = messageDispatcher ?? throw new InvalidOperationException(string.Format("The {0} cannot operate with a null {1}. Please provide a valid {1} instance to use for dispatching {2} messages.", nameof(MouseSimulator), typeof(IInputMessageDispatcher).Name, typeof(User32.INPUT).Name));
     }
 
+    /// <inheritdoc/>
     public IKeyboardSimulator Keyboard => _inputSimulator.Keyboard;
 
     private void SendSimulatedInput(User32.INPUT[] inputList)

@@ -3,8 +3,12 @@ using System.WindowsInput.WinApi;
 
 namespace System.WindowsInput;
 
+/// <summary>
+/// Implementation of <see cref="IInputMessageDispatcher"/> for dispatching input messages for Windows platform.
+/// </summary>
 internal class WindowsInputMessageDispatcher : IInputMessageDispatcher
 {
+    /// <inheritdoc/>
     public void DispatchInput(User32.INPUT[] inputs)
     {
         if (inputs == null)

@@ -2,20 +2,33 @@
 
 namespace System.WindowsInput;
 
+/// <summary>
+/// Implementation of <see cref="IKeyboardSimulator"/> for simulating keyboard input on Windows platform.
+/// </summary>
 public class KeyboardSimulator : IKeyboardSimulator
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="KeyboardSimulator"/> class.
+    /// </summary>
+    /// <param name="inputSimulator">The input simulator instance.</param>
     public KeyboardSimulator(IInputSimulator inputSimulator)
     {
         _inputSimulator = inputSimulator ?? throw new ArgumentNullException(nameof(inputSimulator));
         _messageDispatcher = new WindowsInputMessageDispatcher();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="KeyboardSimulator"/> class with a custom dispatcher.
+    /// </summary>
+    /// <param name="inputSimulator">The input simulator instance.</param>
+    /// <param name="messageDispatcher">The input message dispatcher.</param>
     internal KeyboardSimulator(IInputSimulator inputSimulator, IInputMessageDispatcher messageDispatcher)
     {
         _inputSimulator = inputSimulator ?? throw new ArgumentNullException(nameof(inputSimulator));
         _messageDispatcher = messageDispatcher ?? throw new InvalidOperationException(string.Format("The {0} cannot operate with a null {1}. Please provide a valid {1} instance to use for dispatching {2} messages.", typeof(KeyboardSimulator).Name, typeof(IInputMessageDispatcher).Name, typeof(User32.INPUT).Name));
     }
 
+    /// <inheritdoc/>
     public IMouseSimulator Mouse => _inputSimulator.Mouse;
 
     private void ModifiersDown(InputBuilder builder, IEnumerable<User32.VK> modifierKeyCodes)
