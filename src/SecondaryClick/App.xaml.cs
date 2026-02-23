@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
+using System.NativeTray;
 using System.Windows;
-using Vanara.PInvoke;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 
@@ -13,14 +13,7 @@ public partial class App : Application
     static App()
     {
         // Explicitly set to PerMonitor to avoid being overridden by the system
-        if (SHCore.SetProcessDpiAwareness(SHCore.PROCESS_DPI_AWARENESS.PROCESS_PER_MONITOR_DPI_AWARE) is HRESULT result)
-        {
-            Debug.WriteLine(
-                result == 0 ?
-                "DPI Awareness applied successfully" :
-                $"DPI Awareness manual setup failed. Error Code: {result}"
-            );
-        }
+        Debug.WriteLine(DpiAware.SetProcessDpiAwareness() ? "DPI Awareness applied successfully" : "DPI Awareness manual setup failed.");
     }
 
     protected override void OnStartup(StartupEventArgs e)

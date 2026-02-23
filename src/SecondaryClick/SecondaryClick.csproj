@@ -22,8 +22,6 @@
 
   <ItemGroup>
     <PackageReference Include="Antelcat.I18N.WPF" Version="1.0.1"/>
-    <PackageReference Include="Vanara.PInvoke.Kernel32" Version="5.0.0"/>
-    <PackageReference Include="Vanara.PInvoke.SHCore" Version="5.0.0"/>
     <PackageReference Include="NativeTray" Version="1.0.0"/>
   </ItemGroup>
 

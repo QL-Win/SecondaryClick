@@ -1,9 +1,9 @@
+using SecondaryClick.WinApi;
 using System.Diagnostics;
 using System.Drawing;
 using System.NativeTray;
 using System.Reflection;
 using System.Windows;
-using Vanara.PInvoke;
 
 namespace SecondaryClick;
 
@@ -99,7 +99,7 @@ internal sealed partial class TrayIconManager : IDisposable
         try
         {
             uint len = 0;
-            Win32Error r = Kernel32.GetCurrentPackageFullName(ref len, null);
+            uint r = Kernel32.GetCurrentPackageFullName(ref len, null);
 
             return r == Win32Error.ERROR_INSUFFICIENT_BUFFER;
         }
