@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.MouseKeyHook.Implementation;
-using System.Windows.Forms;
+using System.MouseKeyHook.WinApi;
 
 namespace System.MouseKeyHook.HotKeys;
 

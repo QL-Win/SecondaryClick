@@ -2,6 +2,7 @@
 using System.MouseKeyHook;
 using System.Runtime.InteropServices;
 using System.WindowsInput.WinApi;
+using System.MouseKeyHook.WinApi;
 
 namespace SecondaryClick;
 

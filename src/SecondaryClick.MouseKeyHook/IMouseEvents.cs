@@ -1,5 +1,4 @@
-using System;
-using System.Windows.Forms;
+using System.MouseKeyHook.WinApi;
 
 namespace System.MouseKeyHook;
 
@@ -11,7 +10,7 @@ public interface IMouseEvents
     /// <summary>
     /// Occurs when the mouse pointer is moved.
     /// </summary>
-    event MouseEventHandler MouseMove;
+    public event MouseEventHandler MouseMove;
 
     /// <summary>
     /// Occurs when the mouse pointer is moved.
@@ -20,17 +19,17 @@ public interface IMouseEvents
     /// This event provides extended arguments of type <see cref="MouseEventArgs" /> enabling you to
     /// suppress further processing of mouse movement in other applications.
     /// </remarks>
-    event EventHandler<MouseEventExtArgs> MouseMoveExt;
+    public event EventHandler<MouseEventExtArgs> MouseMoveExt;
 
     /// <summary>
     /// Occurs when a click was performed by the mouse.
     /// </summary>
-    event MouseEventHandler MouseClick;
+    public event MouseEventHandler MouseClick;
 
     /// <summary>
     /// Occurs when the mouse a mouse button is pressed.
     /// </summary>
-    event MouseEventHandler MouseDown;
+    public event MouseEventHandler MouseDown;
 
     /// <summary>
     /// Occurs when the mouse a mouse button is pressed.
@@ -39,12 +38,12 @@ public interface IMouseEvents
     /// This event provides extended arguments of type <see cref="MouseEventArgs" /> enabling you to
     /// suppress further processing of mouse click in other applications.
     /// </remarks>
-    event EventHandler<MouseEventExtArgs> MouseDownExt;
+    public event EventHandler<MouseEventExtArgs> MouseDownExt;
 
     /// <summary>
     /// Occurs when a mouse button is released.
     /// </summary>
-    event MouseEventHandler MouseUp;
+    public event MouseEventHandler MouseUp;
 
     /// <summary>
     /// Occurs when a mouse button is released.
@@ -53,17 +52,17 @@ public interface IMouseEvents
     /// This event provides extended arguments of type <see cref="MouseEventArgs" /> enabling you to
     /// suppress further processing of mouse click in other applications.
     /// </remarks>
-    event EventHandler<MouseEventExtArgs> MouseUpExt;
+    public event EventHandler<MouseEventExtArgs> MouseUpExt;
 
     /// <summary>
     /// Occurs when the mouse wheel moves.
     /// </summary>
-    event MouseEventHandler MouseWheel;
+    public event MouseEventHandler MouseWheel;
 
     /// <summary>
     /// Occurs when the mouse wheel moves horizontally.
     /// </summary>
-    event MouseEventHandler MouseHWheel;
+    public event MouseEventHandler MouseHWheel;
 
     /// <summary>
     /// Occurs when the mouse wheel moves.
@@ -72,7 +71,7 @@ public interface IMouseEvents
     /// This event provides extended arguments of type <see cref="MouseEventArgs" /> enabling you to
     /// suppress further processing of mouse wheel moves in other applications.
     /// </remarks>
-    event EventHandler<MouseEventExtArgs> MouseWheelExt;
+    public event EventHandler<MouseEventExtArgs> MouseWheelExt;
 
     /// <summary>
     /// Occurs when the mouse wheel moves.
@@ -81,17 +80,17 @@ public interface IMouseEvents
     /// This event provides extended arguments of type <see cref="MouseEventArgs" /> enabling you to
     /// suppress further processing of horizontal mouse wheel moves in other applications.
     /// </remarks>
-    event EventHandler<MouseEventExtArgs> MouseHWheelExt;
+    public event EventHandler<MouseEventExtArgs> MouseHWheelExt;
 
     /// <summary>
     /// Occurs when a mouse button is double-clicked.
     /// </summary>
-    event MouseEventHandler MouseDoubleClick;
+    public event MouseEventHandler MouseDoubleClick;
 
     /// <summary>
     /// Occurs when a drag event has started (left button held down whilst moving more than the system drag threshold).
     /// </summary>
-    event MouseEventHandler MouseDragStarted;
+    public event MouseEventHandler MouseDragStarted;
 
     /// <summary>
     /// Occurs when a drag event has started (left button held down whilst moving more than the system drag threshold).
@@ -100,12 +99,12 @@ public interface IMouseEvents
     /// This event provides extended arguments of type <see cref="MouseEventArgs" /> enabling you to
     /// suppress further processing of mouse movement in other applications.
     /// </remarks>
-    event EventHandler<MouseEventExtArgs> MouseDragStartedExt;
+    public event EventHandler<MouseEventExtArgs> MouseDragStartedExt;
 
     /// <summary>
     /// Occurs when a drag event has completed.
     /// </summary>
-    event MouseEventHandler MouseDragFinished;
+    public event MouseEventHandler MouseDragFinished;
 
     /// <summary>
     /// Occurs when a drag event has completed.
@@ -114,5 +113,5 @@ public interface IMouseEvents
     /// This event provides extended arguments of type <see cref="MouseEventArgs" /> enabling you to
     /// suppress further processing of mouse movement in other applications.
     /// </remarks>
-    event EventHandler<MouseEventExtArgs> MouseDragFinishedExt;
+    public event EventHandler<MouseEventExtArgs> MouseDragFinishedExt;
 }

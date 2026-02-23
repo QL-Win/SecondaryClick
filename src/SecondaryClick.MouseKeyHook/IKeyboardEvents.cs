@@ -1,5 +1,4 @@
-using System;
-using System.Windows.Forms;
+using System.MouseKeyHook.WinApi;
 
 namespace System.MouseKeyHook;
 
@@ -11,7 +10,7 @@ public interface IKeyboardEvents
     /// <summary>
     /// Occurs when a key is pressed.
     /// </summary>
-    event KeyEventHandler KeyDown;
+    public event KeyEventHandler KeyDown;
 
     /// <summary>
     /// Occurs when a key is pressed.
@@ -31,15 +30,15 @@ public interface IKeyboardEvents
     /// set the <see cref="KeyPressEventArgs.Handled" /> property in your form's KeyPress event-handling method to
     /// <b>true</b>.
     /// </remarks>
-    event KeyPressEventHandler KeyPress;
+    public event KeyPressEventHandler KeyPress;
 
     /// <summary>
     /// Occurs when a key is pressed, includes the keystroke characters if any
     /// </summary>
-    event EventHandler<KeyDownTxtEventArgs> KeyDownTxt;
+    public event EventHandler<KeyDownTxtEventArgs> KeyDownTxt;
 
     /// <summary>
     /// Occurs when a key is released.
     /// </summary>
-    event KeyEventHandler KeyUp;
+    public event KeyEventHandler KeyUp;
 }

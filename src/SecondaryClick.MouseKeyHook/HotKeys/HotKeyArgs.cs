@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace System.MouseKeyHook.HotKeys;
+﻿namespace System.MouseKeyHook.HotKeys;
 
 /// <summary>
 /// The event arguments passed when a HotKeySet's OnHotKeysDownHold event is triggered.

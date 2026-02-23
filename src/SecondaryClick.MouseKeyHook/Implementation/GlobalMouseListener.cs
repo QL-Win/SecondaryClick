@@ -1,6 +1,4 @@
 using System.MouseKeyHook.WinApi;
-using System;
-using System.Windows.Forms;
 
 namespace System.MouseKeyHook.Implementation;
 

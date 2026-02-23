@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace System.MouseKeyHook;
+﻿namespace System.MouseKeyHook;
 
 /// <summary>
 /// Provides keyboard and mouse events.

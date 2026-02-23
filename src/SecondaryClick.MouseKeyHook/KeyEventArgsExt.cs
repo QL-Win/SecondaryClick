@@ -1,8 +1,6 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.MouseKeyHook.Implementation;
+﻿using System.MouseKeyHook.Implementation;
 using System.MouseKeyHook.WinApi;
+using System.Runtime.InteropServices;
 
 namespace System.MouseKeyHook;
 

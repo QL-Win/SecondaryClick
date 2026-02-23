@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using System.MouseKeyHook.Implementation;
+using System.MouseKeyHook.WinApi;
 
 namespace System.MouseKeyHook;
 

@@ -9,7 +9,7 @@ namespace System.MouseKeyHook.WinApi;
 /// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/gdi/rectangl_0tiq.asp
 /// </remarks>
 [StructLayout(LayoutKind.Sequential)]
-internal struct Point
+public struct Point
 {
     /// <summary>
     /// Specifies the X-coordinate of the point.

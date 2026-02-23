@@ -1,8 +1,6 @@
-﻿using System;
+﻿using System.MouseKeyHook.Implementation;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
-using System.MouseKeyHook.Implementation;
 
 namespace System.MouseKeyHook.WinApi;
 
@@ -108,14 +106,14 @@ internal static class KeyboardNativeMethods
                 break;
 
             case 1:
-                if (pwszBuff.Length > 0) chars = new[] { pwszBuff[0] };
+                if (pwszBuff.Length > 0) chars = [pwszBuff[0]];
                 else chars = null;
                 break;
 
             // Two or more (only two of them is relevant)
             default:
-                if (pwszBuff.Length > 1) chars = new[] { pwszBuff[0], pwszBuff[1] };
-                else chars = new[] { pwszBuff[0] };
+                if (pwszBuff.Length > 1) chars = [pwszBuff[0], pwszBuff[1]];
+                else chars = [pwszBuff[0]];
                 break;
         }
 
@@ -124,7 +122,7 @@ internal static class KeyboardNativeMethods
             if (chars != null)
             {
                 var sbTemp = new StringBuilder(5);
-                ToUnicodeEx(lastVirtualKeyCode, lastScanCode, lastKeyState, sbTemp, sbTemp.Capacity, 0, dwhkl);
+                _ = ToUnicodeEx(lastVirtualKeyCode, lastScanCode, lastKeyState, sbTemp, sbTemp.Capacity, 0, dwhkl);
                 lastIsDead = false;
                 lastVirtualKeyCode = 0;
             }
@@ -159,8 +157,7 @@ internal static class KeyboardNativeMethods
     private static IntPtr GetActiveKeyboard()
     {
         var hActiveWnd = ThreadNativeMethods.GetForegroundWindow(); //handle to focused window
-        int dwProcessId;
-        var hCurrentWnd = ThreadNativeMethods.GetWindowThreadProcessId(hActiveWnd, out dwProcessId);
+        var hCurrentWnd = ThreadNativeMethods.GetWindowThreadProcessId(hActiveWnd, out _);
         //thread of focused window
         return GetKeyboardLayout(hCurrentWnd); //get the layout identifier for the thread whose window is focused
     }

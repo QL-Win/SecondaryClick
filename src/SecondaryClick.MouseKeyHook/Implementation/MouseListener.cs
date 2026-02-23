@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
+﻿using System.Runtime.InteropServices;
 using System.MouseKeyHook.WinApi;
 
 namespace System.MouseKeyHook.Implementation;
@@ -50,7 +48,7 @@ internal abstract class MouseListener : BaseListener, IMouseEvents
 {
     private readonly ButtonSet m_DoubleDown;
     private readonly ButtonSet m_SingleDown;
-    protected readonly Point m_UninitialisedPoint = new Point(-99999, -99999);
+    protected readonly Point m_UninitialisedPoint = new(-99999, -99999);
     private readonly int m_SwapButtonThreshold;
     private readonly int m_xDragThreshold;
     private readonly int m_yDragThreshold;

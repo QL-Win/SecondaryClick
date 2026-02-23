@@ -1,5 +1,3 @@
-using System;
-
 namespace System.MouseKeyHook;
 
 public class KeyDownTxtEventArgs : EventArgs
