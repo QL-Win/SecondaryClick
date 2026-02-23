@@ -2,7 +2,7 @@
 using System.MouseKeyHook;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Vanara.PInvoke;
+using System.WindowsInput.WinApi;
 
 namespace SecondaryClick;
 

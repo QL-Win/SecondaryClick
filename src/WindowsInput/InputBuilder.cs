@@ -1,7 +1,8 @@
 ﻿using System.Collections;
-using Vanara.PInvoke;
+using System.WindowsInput.WinApi;
 
 namespace System.WindowsInput;
+
 public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
 {
     public InputBuilder()
@@ -54,7 +55,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         bool isUseExtendedKey = isExtendedKey == null ? IsExtendedKey(keyCode) : isExtendedKey.Value;
 
-        if ((VK2)keyCode == VK2.VK_NUMPAD_ENTER)
+        if ((User32.VK2)keyCode == User32.VK2.VK_NUMPAD_ENTER)
         {
             keyCode = User32.VK.VK_RETURN;
             isUseExtendedKey = true;
@@ -67,7 +68,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
             {
                 wVk = (ushort)keyCode,
                 wScan = (ushort)(User32.MapVirtualKey((uint)keyCode, 0) & 0xFFU),
-                dwFlags = (isUseExtendedKey ? User32.KEYEVENTF.KEYEVENTF_EXTENDEDKEY : 0),
+                dwFlags = isUseExtendedKey ? User32.KEYEVENTF.KEYEVENTF_EXTENDEDKEY : 0,
                 time = 0,
                 dwExtraInfo = IntPtr.Zero,
             },
@@ -81,7 +82,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         bool isUseExtendedKey = isExtendedKey == null ? IsExtendedKey(keyCode) : isExtendedKey.Value;
 
-        if ((VK2)keyCode == VK2.VK_NUMPAD_ENTER)
+        if ((User32.VK2)keyCode == User32.VK2.VK_NUMPAD_ENTER)
         {
             keyCode = User32.VK.VK_RETURN;
             isUseExtendedKey = true;
@@ -181,7 +182,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dx = x,
@@ -197,7 +198,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dx = absoluteX,
@@ -213,7 +214,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dx = absoluteX,
@@ -229,7 +230,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dwFlags = ToMouseButtonDownFlag(button),
@@ -243,7 +244,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dwFlags = User32.MOUSEEVENTF.MOUSEEVENTF_XDOWN,
@@ -258,7 +259,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dwFlags = ToMouseButtonUpFlag(button),
@@ -272,7 +273,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dwFlags = User32.MOUSEEVENTF.MOUSEEVENTF_XUP,
@@ -307,7 +308,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dwFlags = User32.MOUSEEVENTF.MOUSEEVENTF_WHEEL,
@@ -322,7 +323,7 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     {
         User32.INPUT item = new()
         {
-            type = User32.INPUTTYPE.INPUT_MOUSE,
+            type = (uint)User32.INPUTTYPE.INPUT_MOUSE,
             mi = new User32.MOUSEINPUT()
             {
                 dwFlags = User32.MOUSEEVENTF.MOUSEEVENTF_HWHEEL,
@@ -356,20 +357,4 @@ public class InputBuilder : IEnumerable<User32.INPUT>, IEnumerable
     }
 
     private readonly List<User32.INPUT> _inputList;
-}
-
-/// <summary>
-/// https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-/// </summary>
-public enum VK2
-{
-    /// <summary>
-    ///  ENTER key
-    /// </summary>
-    VK_ENTER = User32.VK.VK_RETURN,
-
-    /// <summary>
-    ///  The Unassigned code: The Num ENTER key.
-    /// </summary>
-    VK_NUMPAD_ENTER = 0x0E,
 }

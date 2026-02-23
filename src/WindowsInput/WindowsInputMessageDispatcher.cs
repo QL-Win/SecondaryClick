@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-using Vanara.PInvoke;
+using System.WindowsInput.WinApi;
 
 namespace System.WindowsInput;
 
