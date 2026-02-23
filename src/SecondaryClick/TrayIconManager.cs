@@ -29,7 +29,7 @@ internal sealed partial class TrayIconManager : IDisposable
 
         _icon = new TrayIconHost
         {
-            ToolTipText = "Secondary Click",
+            ToolTipText = $"SecondaryClick v{Assembly.GetExecutingAssembly().GetName().Version!.ToString(3)}",
             ThemeMode = TrayThemeMode.System,
             Icon = Icon.ExtractAssociatedIcon(Process.GetCurrentProcess().MainModule?.FileName!)!.Handle,
             Menu =
