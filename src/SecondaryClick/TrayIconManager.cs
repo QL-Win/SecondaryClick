@@ -2,8 +2,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.NativeTray;
 using System.Reflection;
+using System.Windows;
 using Vanara.PInvoke;
-using Application = System.Windows.Application;
 
 namespace SecondaryClick;
 

@@ -16,10 +16,8 @@
 
   <ItemGroup>
     <None Remove="*.ico"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="*.ico"/>
+    <Resource Remove="LogoDark.ico"/>
   </ItemGroup>
 
   <ItemGroup>
