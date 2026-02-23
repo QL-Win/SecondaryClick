@@ -1,7 +1,6 @@
 ﻿using System.WindowsInput;
 using System.MouseKeyHook;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using System.WindowsInput.WinApi;
 
 namespace SecondaryClick;
