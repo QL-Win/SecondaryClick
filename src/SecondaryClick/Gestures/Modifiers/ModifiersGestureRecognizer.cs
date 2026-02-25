@@ -3,18 +3,9 @@ using System.MouseKeyHook;
 using System.WindowsInput.WinApi;
 using System.MouseKeyHook.WinApi;
 
-namespace SecondaryClick;
+namespace SecondaryClick.Gestures.Modifiers;
 
-[Flags]
-public enum SecondaryClickActivationModifiers
-{
-    None = 0,
-    Alt = 1,
-    Control = 2,
-    Shift = 4,
-}
-
-public sealed class SecondaryClickHandler : IDisposable
+public sealed class ModifiersGestureRecognizer : IGestureRecognizer
 {
     private readonly InputSimulator _simulator = new();
     private IKeyboardMouseEvents? _hook;
@@ -22,16 +13,16 @@ public sealed class SecondaryClickHandler : IDisposable
     private bool _suppressInjected;
     private bool _enabled;
     private bool _suppressAltKey;
-    private SecondaryClickActivationModifiers _activationModifiers = SecondaryClickActivationModifiers.Alt;
+    private GestureModifiers _activationModifiers = GestureModifiers.Alt;
 
-    public SecondaryClickActivationModifiers ActivationModifiers
+    public GestureModifiers ActivationModifiers
     {
         get => _activationModifiers;
         set
         {
             _activationModifiers = value;
 
-            if (!_activationModifiers.HasFlag(SecondaryClickActivationModifiers.Alt))
+            if (!_activationModifiers.HasFlag(GestureModifiers.Alt))
             {
                 _suppressAltKey = false;
             }
@@ -96,13 +87,13 @@ public sealed class SecondaryClickHandler : IDisposable
             return;
 
         var pressedModifiers = GetPressedActivationModifiers();
-        if (pressedModifiers == SecondaryClickActivationModifiers.None)
+        if (pressedModifiers == GestureModifiers.None)
             return;
 
         if (e.Button == MouseButtons.Left)
         {
             _rightDownInjected = true;
-            _suppressAltKey = pressedModifiers.HasFlag(SecondaryClickActivationModifiers.Alt);
+            _suppressAltKey = pressedModifiers.HasFlag(GestureModifiers.Alt);
             QueueInjected(() => _simulator.Mouse.RightButtonDown());
             e.Handled = true;
         }
@@ -171,26 +162,26 @@ public sealed class SecondaryClickHandler : IDisposable
 
     private bool IsActivationModifierPressed()
     {
-        return GetPressedActivationModifiers() != SecondaryClickActivationModifiers.None;
+        return GetPressedActivationModifiers() != GestureModifiers.None;
     }
 
-    private SecondaryClickActivationModifiers GetPressedActivationModifiers()
+    private GestureModifiers GetPressedActivationModifiers()
     {
-        var modifiers = SecondaryClickActivationModifiers.None;
+        var modifiers = GestureModifiers.None;
 
-        if (_activationModifiers.HasFlag(SecondaryClickActivationModifiers.Alt) && IsAltPressed())
+        if (_activationModifiers.HasFlag(GestureModifiers.Alt) && IsAltPressed())
         {
-            modifiers |= SecondaryClickActivationModifiers.Alt;
+            modifiers |= GestureModifiers.Alt;
         }
 
-        if (_activationModifiers.HasFlag(SecondaryClickActivationModifiers.Control) && IsControlPressed())
+        if (_activationModifiers.HasFlag(GestureModifiers.Control) && IsControlPressed())
         {
-            modifiers |= SecondaryClickActivationModifiers.Control;
+            modifiers |= GestureModifiers.Control;
         }
 
-        if (_activationModifiers.HasFlag(SecondaryClickActivationModifiers.Shift) && IsShiftPressed())
+        if (_activationModifiers.HasFlag(GestureModifiers.Shift) && IsShiftPressed())
         {
-            modifiers |= SecondaryClickActivationModifiers.Shift;
+            modifiers |= GestureModifiers.Shift;
         }
 
         return modifiers;

@@ -1,3 +1,5 @@
+using SecondaryClick.Gestures;
+using SecondaryClick.Gestures.Modifiers;
 using SecondaryClick.WinApi;
 using System.Diagnostics;
 using System.Drawing;
@@ -13,12 +15,12 @@ internal sealed partial class TrayIconManager : IDisposable
 
     private readonly TrayIconHost _icon;
     private readonly TrayMenuItem _altAsRightMenuItem;
-    private readonly SecondaryClickHandler _altHandler;
+
+    private readonly RecognizerHolder _recognizerHolder;
 
     private TrayIconManager()
     {
-        _altHandler = new SecondaryClickHandler();
-        _altHandler.SetEnabled(true);
+        _recognizerHolder = new();
 
         _altAsRightMenuItem = new TrayMenuItem
         {
@@ -53,7 +55,7 @@ internal sealed partial class TrayIconManager : IDisposable
 
     public void Dispose()
     {
-        _altHandler.Dispose();
+        _recognizerHolder.Dispose();
         _icon.IsVisible = false;
     }
 
@@ -95,7 +97,7 @@ internal sealed partial class TrayIconManager : IDisposable
     {
         var newValue = !_altAsRightMenuItem.IsChecked;
         _altAsRightMenuItem.IsChecked = newValue;
-        _altHandler.SetEnabled(newValue);
+        _recognizerHolder.ModifiersRecognizer.SetEnabled(newValue);
     }
 
     private static bool IsRunningAsUWP()
