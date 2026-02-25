@@ -15,9 +15,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="*.ico" />
-    <Resource Include="*.ico" />
-    <Resource Remove="LogoDark.ico" />
+    <None Remove="*.ico"/>
+    <Resource Include="*.ico"/>
+    <Resource Remove="LogoDark.ico"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -25,12 +25,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Antelcat.I18N.WPF" Version="1.1.0" />
-    <PackageReference Include="NativeTray" Version="1.0.0" />
+    <PackageReference Include="Antelcat.I18N.WPF" Version="1.1.0"/>
+    <PackageReference Include="NativeTray" Version="1.0.0"/>
+    <PackageReference Include="Fischless.Configuration" Version="1.1.0"/>
+    <PackageReference Include="Fischless.Configuration.Yaml" Version="1.1.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SecondaryClick.MouseKeyHook\SecondaryClick.MouseKeyHook.csproj" />
-    <ProjectReference Include="..\SecondaryClick.WindowsInput\SecondaryClick.WindowsInput.csproj" />
+    <ProjectReference Include="..\SecondaryClick.MouseKeyHook\SecondaryClick.MouseKeyHook.csproj"/>
+    <ProjectReference Include="..\SecondaryClick.WindowsInput\SecondaryClick.WindowsInput.csproj"/>
   </ItemGroup>
 </Project>

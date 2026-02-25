@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using Fischless.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.NativeTray;
 using System.Windows;
 using Application = System.Windows.Application;
@@ -19,6 +21,9 @@ public partial class App : Application
     public App()
     {
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+        ConfigurationManager.ConfigurationSerializer = new YamlConfigurationSerializer();
+        ConfigurationManager.Setup(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SecondaryClick", "config.yaml"));
     }
 
     protected override void OnStartup(StartupEventArgs e)
