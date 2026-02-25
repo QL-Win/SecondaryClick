@@ -84,6 +84,13 @@ internal sealed partial class TrayIconManager : IDisposable
         return _instance ??= new TrayIconManager();
     }
 
+    public static void Start()
+    {
+        using TrayIconWindow window = new();
+        window.Show();
+        _ = GetInstance();
+    }
+
     private void ToggleAltAsRightClickMode(object? _)
     {
         var newValue = !_altAsRightMenuItem.IsChecked;

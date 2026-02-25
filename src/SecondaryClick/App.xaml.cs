@@ -16,6 +16,11 @@ public partial class App : Application
         Debug.WriteLine(DpiAware.SetProcessDpiAwareness() ? "DPI Awareness applied successfully" : "DPI Awareness manual setup failed.");
     }
 
+    public App()
+    {
+        ShutdownMode = ShutdownMode.OnExplicitShutdown;
+    }
+
     protected override void OnStartup(StartupEventArgs e)
     {
         if (!EnsureFirstInstance())
@@ -24,7 +29,7 @@ public partial class App : Application
             return;
         }
 
-        TrayIconManager.GetInstance();
+        TrayIconManager.Start();
     }
 
     protected override void OnExit(ExitEventArgs e)
