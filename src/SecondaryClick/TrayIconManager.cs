@@ -24,9 +24,22 @@ internal sealed partial class TrayIconManager : IDisposable
 
         _altAsRightMenuItem = new TrayMenuItem
         {
-            Header = "辅助点按",
+            Header = "手势辅助",
             IsChecked = true,
             Command = ToggleAltAsRightClickMode,
+            Menu =
+            [
+                new TrayMenuItem
+                {
+                    Header = "双指点按或轻点",
+                    IsChecked = true,
+                },
+                new TrayMenuItem
+                {
+                    Header = "点按右下角",
+                    IsChecked = true,
+                },
+            ],
         };
 
         _icon = new TrayIconHost
@@ -43,6 +56,34 @@ internal sealed partial class TrayIconManager : IDisposable
                 },
                 new TraySeparator(),
                 _altAsRightMenuItem,
+                new TrayMenuItem
+                {
+                    Header = "键盘辅助",
+                    IsChecked = false,
+                    Menu =
+                    [
+                        new TrayMenuItem
+                        {
+                            Header = "关",
+                            IsChecked = false,
+                        },
+                        new TrayMenuItem
+                        {
+                            Header = "Alt 键",
+                            IsChecked = true,
+                        },
+                        new TrayMenuItem
+                        {
+                            Header = "Control 键",
+                            IsChecked = false,
+                        },
+                        new TrayMenuItem
+                        {
+                            Header = "Shift 键",
+                            IsChecked = false,
+                        },
+                    ]
+                },
                 new TraySeparator(),
                 new TrayMenuItem
                 {
