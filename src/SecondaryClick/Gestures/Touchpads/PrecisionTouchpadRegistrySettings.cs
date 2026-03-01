@@ -2,9 +2,23 @@
 
 namespace SecondaryClick.Gestures.Touchpads;
 
-internal static class PrecisionTouchpadSettings
+/// <summary>
+/// https://learn.microsoft.com/en-us/windows-hardware/design/component-guidelines/touchpad-tuning-guidelines
+/// </summary>
+internal static class PrecisionTouchpadRegistrySettings
 {
     private const string KeyPath = @"Software\Microsoft\Windows\CurrentVersion\PrecisionTouchPad";
+
+    public static bool IsReadable
+    {
+        get
+        {
+            Version version = Environment.OSVersion.Version;
+
+            // Check if the current OS is Windows 10 version 1511 (Build 10586) or later.
+            return version.Major == 10 && version.Minor == 0 && version.Build >= 10586;
+        }
+    }
 
     /// <summary>
     /// Read: whether two-finger tap is treated as right-click.

@@ -1,4 +1,5 @@
 using SecondaryClick.Gestures;
+using SecondaryClick.Gestures.Touchpads;
 using SecondaryClick.WinApi;
 using System.Diagnostics;
 using System.Drawing;
@@ -44,10 +45,15 @@ internal sealed partial class TrayIconManager : IDisposable
                             Tag = "TwoFingerTap",
                             Header = "双指点按或轻点",
                             IsChecked = _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap,
+                            IsEnabled = PrecisionTouchpadSPISettings.IsWritable,
+                            IsVisible = PrecisionTouchpadRegistrySettings.IsReadable,
                             Command = _ =>
                             {
-                                _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap
-                                    = !_recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
+                                if (PrecisionTouchpadSPISettings.IsWritable)
+                                {
+                                    _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap
+                                        = !_recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
+                                }
                             },
                         },
                         new TrayMenuItem
@@ -55,10 +61,15 @@ internal sealed partial class TrayIconManager : IDisposable
                             Tag = "RightClickZone",
                             Header = "点按右下角",
                             IsChecked = _recognizerHolder.TouchpadRecognizer.IsRightClickZone,
+                            IsEnabled = PrecisionTouchpadSPISettings.IsWritable,
+                            IsVisible = PrecisionTouchpadRegistrySettings.IsReadable,
                             Command = _ =>
                             {
-                                _recognizerHolder.TouchpadRecognizer.IsRightClickZone
-                                    = !_recognizerHolder.TouchpadRecognizer.IsRightClickZone;
+                                if (PrecisionTouchpadSPISettings.IsWritable)
+                                {
+                                    _recognizerHolder.TouchpadRecognizer.IsRightClickZone
+                                        = !_recognizerHolder.TouchpadRecognizer.IsRightClickZone;
+                                }
                             },
                         },
                     ],
@@ -108,10 +119,10 @@ internal sealed partial class TrayIconManager : IDisposable
 
         _icon.RightClick += (_, _) =>
         {
-            FindMenuItemByTag(_icon.Menu, "TwoFingerTap")?.IsChecked = 
+            FindMenuItemByTag(_icon.Menu, "TwoFingerTap")?.IsChecked =
                 _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
 
-            FindMenuItemByTag(_icon.Menu, "RightClickZone")?.IsChecked = 
+            FindMenuItemByTag(_icon.Menu, "RightClickZone")?.IsChecked =
                 _recognizerHolder.TouchpadRecognizer.IsRightClickZone;
         };
     }

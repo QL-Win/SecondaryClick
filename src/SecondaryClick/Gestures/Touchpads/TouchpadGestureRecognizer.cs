@@ -4,14 +4,14 @@ public sealed class TouchpadGestureRecognizer : IGestureRecognizer
 {
     public bool IsTwoFingerTap
     {
-        get => PrecisionTouchpadSettings.GetTwoFingerTapRightClickEnabled() ?? false;
-        set => PrecisionTouchpadSettings.SetTwoFingerTapRightClickEnabled(value);
+        get => PrecisionTouchpadRegistrySettings.GetTwoFingerTapRightClickEnabled() ?? false;
+        set => PrecisionTouchpadSPISettings.SetTwoFingerTapRightClickEnabled(value);
     }
 
     public bool IsRightClickZone
     {
-        get => PrecisionTouchpadSettings.GetRightClickZoneEnabled() ?? false;
-        set => PrecisionTouchpadSettings.SetRightClickZoneEnabled(value);
+        get => PrecisionTouchpadRegistrySettings.GetRightClickZoneEnabled() ?? false;
+        set => PrecisionTouchpadSPISettings.SetRightClickZoneEnabled(value);
     }
 
     public void Dispose()
