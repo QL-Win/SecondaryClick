@@ -41,7 +41,6 @@ internal static class PrecisionTouchpadSettings
             return null;
 
         // Windows uses REG_DWORD here.
-        // 0xFFFFFFFF = true
         if (value is int intValue)
             return (uint)intValue == 0xFFFFFFFF;
 
@@ -58,7 +57,7 @@ internal static class PrecisionTouchpadSettings
 
             key.SetValue(
                 valueName,
-                enabled ? 0xFFFFFFFF : 0,
+                enabled ? unchecked((int)0xFFFFFFFF) : 0,
                 RegistryValueKind.DWord);
 
             return true;
