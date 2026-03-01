@@ -1,5 +1,4 @@
 using SecondaryClick.Gestures;
-using SecondaryClick.Gestures.Modifiers;
 using SecondaryClick.WinApi;
 using System.Diagnostics;
 using System.Drawing;
@@ -12,35 +11,13 @@ namespace SecondaryClick;
 internal sealed partial class TrayIconManager : IDisposable
 {
     private static TrayIconManager? _instance;
-
     private readonly TrayIconHost _icon;
-    private readonly TrayMenuItem _altAsRightMenuItem;
-
     private readonly RecognizerHolder _recognizerHolder;
 
     private TrayIconManager()
     {
         _recognizerHolder = new();
-
-        _altAsRightMenuItem = new TrayMenuItem
-        {
-            Header = "手势辅助",
-            IsChecked = true,
-            Command = ToggleAltAsRightClickMode,
-            Menu =
-            [
-                new TrayMenuItem
-                {
-                    Header = "双指点按或轻点",
-                    IsChecked = true,
-                },
-                new TrayMenuItem
-                {
-                    Header = "点按右下角",
-                    IsChecked = true,
-                },
-            ],
-        };
+        //_recognizerHolder.ModifiersRecognizer.SetEnabled(true);
 
         _icon = new TrayIconHost
         {
@@ -55,30 +32,65 @@ internal sealed partial class TrayIconManager : IDisposable
                     IsEnabled = false,
                 },
                 new TraySeparator(),
-                _altAsRightMenuItem,
                 new TrayMenuItem
                 {
+                    Tag = "Touchpads",
+                    Header = "触控辅助",
+                    IsChecked = true,
+                    Menu =
+                    [
+                        new TrayMenuItem
+                        {
+                            Tag = "TwoFingerTap",
+                            Header = "双指点按或轻点",
+                            IsChecked = _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap,
+                            Command = _ =>
+                            {
+                                _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap
+                                    = !_recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
+                            },
+                        },
+                        new TrayMenuItem
+                        {
+                            Tag = "RightClickZone",
+                            Header = "点按右下角",
+                            IsChecked = _recognizerHolder.TouchpadRecognizer.IsRightClickZone,
+                            Command = _ =>
+                            {
+                                _recognizerHolder.TouchpadRecognizer.IsRightClickZone
+                                    = !_recognizerHolder.TouchpadRecognizer.IsRightClickZone;
+                            },
+                        },
+                    ],
+                },
+                new TrayMenuItem
+                {
+                    Tag = "Modifiers",
                     Header = "键盘辅助",
                     IsChecked = false,
                     Menu =
                     [
                         new TrayMenuItem
                         {
+                            Tag = "ModifiersOff",
                             Header = "关",
                             IsChecked = false,
                         },
                         new TrayMenuItem
                         {
+                            Tag = "ModifiersAlt",
                             Header = "Alt 键",
                             IsChecked = true,
                         },
                         new TrayMenuItem
                         {
+                            Tag = "ModifiersControl",
                             Header = "Control 键",
                             IsChecked = false,
                         },
                         new TrayMenuItem
                         {
+                            Tag = "ModifiersShift",
                             Header = "Shift 键",
                             IsChecked = false,
                         },
@@ -87,6 +99,7 @@ internal sealed partial class TrayIconManager : IDisposable
                 new TraySeparator(),
                 new TrayMenuItem
                 {
+                    Tag = "Exit",
                     Header = "退出程式",
                     Command = static _ => Application.Current.Shutdown(),
                 }
@@ -132,13 +145,6 @@ internal sealed partial class TrayIconManager : IDisposable
         using TrayIconWindow window = new();
         window.Show();
         _ = GetInstance();
-    }
-
-    private void ToggleAltAsRightClickMode(object? _)
-    {
-        var newValue = !_altAsRightMenuItem.IsChecked;
-        _altAsRightMenuItem.IsChecked = newValue;
-        _recognizerHolder.ModifiersRecognizer.SetEnabled(newValue);
     }
 
     private static bool IsRunningAsUWP()
