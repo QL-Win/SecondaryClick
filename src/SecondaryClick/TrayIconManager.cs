@@ -57,14 +57,14 @@ internal sealed partial class TrayIconManager : IDisposable
                 new TrayMenuItem
                 {
                     Tag = "Touchpads",
-                    Header = "触控辅助",
+                    Header = SH.Touchpads,
                     IsChecked = true,
                     Menu =
                     [
                         new TrayMenuItem
                         {
                             Tag = "TwoFingerTap",
-                            Header = "双指点按或轻点",
+                            Header = SH.TwoFingerTap,
                             IsChecked = _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap,
                             IsEnabled = PrecisionTouchpadSPISettings.IsWritable,
                             IsVisible = PrecisionTouchpadRegistrySettings.IsReadable,
@@ -80,7 +80,7 @@ internal sealed partial class TrayIconManager : IDisposable
                         new TrayMenuItem
                         {
                             Tag = "RightClickZone",
-                            Header = "点按右下角",
+                            Header = SH.RightClickZone,
                             IsChecked = _recognizerHolder.TouchpadRecognizer.IsRightClickZone,
                             IsEnabled = PrecisionTouchpadSPISettings.IsWritable,
                             IsVisible = PrecisionTouchpadRegistrySettings.IsReadable,
@@ -98,14 +98,14 @@ internal sealed partial class TrayIconManager : IDisposable
                 new TrayMenuItem
                 {
                     Tag = "Modifiers",
-                    Header = "键盘辅助",
+                    Header = SH.Modifiers,
                     IsChecked = false,
                     Menu =
                     [
                         new TrayMenuItem
                         {
                             Tag = "ModifiersOff",
-                            Header = "关",
+                            Header = SH.ModifiersOff,
                             IsChecked = false,
                             Command = static _ =>
                             {
@@ -120,7 +120,7 @@ internal sealed partial class TrayIconManager : IDisposable
                         new TrayMenuItem
                         {
                             Tag = "ModifiersAlt",
-                            Header = "Alt 键",
+                            Header = SH.ModifiersAlt,
                             IsChecked = true,
                             Command = static _ =>
                             {
@@ -135,7 +135,7 @@ internal sealed partial class TrayIconManager : IDisposable
                         new TrayMenuItem
                         {
                             Tag = "ModifiersControl",
-                            Header = "Control 键",
+                            Header = SH.ModifiersControl,
                             IsChecked = false,
                             Command = static _ =>
                             {
@@ -150,7 +150,7 @@ internal sealed partial class TrayIconManager : IDisposable
                         new TrayMenuItem
                         {
                             Tag = "ModifiersShift",
-                            Header = "Shift 键",
+                            Header = SH.ModifiersShift,
                             IsChecked = false,
                             Command = static _ =>
                             {
@@ -168,7 +168,7 @@ internal sealed partial class TrayIconManager : IDisposable
                 new TrayMenuItem
                 {
                     Tag = "Exit",
-                    Header = "退出程式",
+                    Header = SH.Exit,
                     Command = static _ => Application.Current.Shutdown(),
                 }
             ],
