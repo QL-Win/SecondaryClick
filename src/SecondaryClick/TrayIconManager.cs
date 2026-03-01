@@ -105,6 +105,37 @@ internal sealed partial class TrayIconManager : IDisposable
                 }
             ],
         };
+
+        _icon.RightClick += (_, _) =>
+        {
+            FindMenuItemByTag(_icon.Menu, "TwoFingerTap")?.IsChecked = 
+                _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
+
+            FindMenuItemByTag(_icon.Menu, "RightClickZone")?.IsChecked = 
+                _recognizerHolder.TouchpadRecognizer.IsRightClickZone;
+        };
+    }
+
+    private static TrayMenuItem? FindMenuItemByTag(TrayMenu? menu, string tag)
+    {
+        if (menu == null)
+            return null;
+
+        foreach (ITrayMenuItemBase item in menu.Items)
+        {
+            if (item is not TrayMenuItem menuItem)
+                continue;
+
+            if (menuItem.Tag is string menuItemTag
+                && string.Equals(menuItemTag, tag, StringComparison.Ordinal))
+                return menuItem;
+
+            TrayMenuItem? childMatch = FindMenuItemByTag(menuItem.Menu, tag);
+            if (childMatch != null)
+                return childMatch;
+        }
+
+        return null;
     }
 
     public void Dispose()
