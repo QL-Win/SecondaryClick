@@ -24,7 +24,7 @@ internal static class Globalizations
             {
                 if (culture.Name == "zh")
                 {
-                    ReturnHans(name);
+                    return ReturnHans(name);
                 }
                 else
                 {
@@ -39,11 +39,11 @@ internal static class Globalizations
 
                     if (current.Name == "zh-Hant")
                     {
-                        ReturnHant(name);
+                        return ReturnHant(name);
                     }
                     else
                     {
-                        ReturnHans(name);
+                        return ReturnHans(name);
                     }
                 }
 
@@ -113,8 +113,6 @@ internal static class Globalizations
                     _ => name,
                 };
             }
-
-            return name;
         }
     }
 }

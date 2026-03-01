@@ -56,14 +56,14 @@ internal sealed partial class TrayIconManager : IDisposable
                 new TraySeparator(),
                 new TrayMenuItem
                 {
-                    Tag = "Touchpads",
+                    Tag = nameof(SH.Touchpads),
                     Header = SH.Touchpads,
                     IsChecked = true,
                     Menu =
                     [
                         new TrayMenuItem
                         {
-                            Tag = "TwoFingerTap",
+                            Tag = nameof(SH.TwoFingerTap),
                             Header = SH.TwoFingerTap,
                             IsChecked = _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap,
                             IsEnabled = PrecisionTouchpadSPISettings.IsWritable,
@@ -79,7 +79,7 @@ internal sealed partial class TrayIconManager : IDisposable
                         },
                         new TrayMenuItem
                         {
-                            Tag = "RightClickZone",
+                            Tag = nameof(SH.RightClickZone),
                             Header = SH.RightClickZone,
                             IsChecked = _recognizerHolder.TouchpadRecognizer.IsRightClickZone,
                             IsEnabled = PrecisionTouchpadSPISettings.IsWritable,
@@ -97,14 +97,14 @@ internal sealed partial class TrayIconManager : IDisposable
                 },
                 new TrayMenuItem
                 {
-                    Tag = "Modifiers",
+                    Tag = nameof(SH.Modifiers),
                     Header = SH.Modifiers,
                     IsChecked = false,
                     Menu =
                     [
                         new TrayMenuItem
                         {
-                            Tag = "ModifiersOff",
+                            Tag = nameof(SH.ModifiersOff),
                             Header = SH.ModifiersOff,
                             IsChecked = false,
                             Command = static _ =>
@@ -119,7 +119,7 @@ internal sealed partial class TrayIconManager : IDisposable
                         },
                         new TrayMenuItem
                         {
-                            Tag = "ModifiersAlt",
+                            Tag = nameof(SH.ModifiersAlt),
                             Header = SH.ModifiersAlt,
                             IsChecked = true,
                             Command = static _ =>
@@ -134,7 +134,7 @@ internal sealed partial class TrayIconManager : IDisposable
                         },
                         new TrayMenuItem
                         {
-                            Tag = "ModifiersControl",
+                            Tag = nameof(SH.ModifiersControl),
                             Header = SH.ModifiersControl,
                             IsChecked = false,
                             Command = static _ =>
@@ -149,7 +149,7 @@ internal sealed partial class TrayIconManager : IDisposable
                         },
                         new TrayMenuItem
                         {
-                            Tag = "ModifiersShift",
+                            Tag = nameof(SH.ModifiersShift),
                             Header = SH.ModifiersShift,
                             IsChecked = false,
                             Command = static _ =>
@@ -167,7 +167,7 @@ internal sealed partial class TrayIconManager : IDisposable
                 new TraySeparator(),
                 new TrayMenuItem
                 {
-                    Tag = "Exit",
+                    Tag = nameof(SH.Exit),
                     Header = SH.Exit,
                     Command = static _ => Application.Current.Shutdown(),
                 }
@@ -176,24 +176,24 @@ internal sealed partial class TrayIconManager : IDisposable
 
         _icon.RightClick += (_, _) =>
         {
-            FindMenuItemByTag(_icon.Menu, "TwoFingerTap")?.IsChecked =
+            FindMenuItemByTag(_icon.Menu, nameof(SH.TwoFingerTap))?.IsChecked =
                 _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
 
-            FindMenuItemByTag(_icon.Menu, "RightClickZone")?.IsChecked =
+            FindMenuItemByTag(_icon.Menu, nameof(SH.RightClickZone))?.IsChecked =
                 _recognizerHolder.TouchpadRecognizer.IsRightClickZone;
 
-            FindMenuItemByTag(_icon.Menu, "ModifiersOff")?.IsChecked =
+            FindMenuItemByTag(_icon.Menu, nameof(SH.ModifiersOff))?.IsChecked =
                 !Configurations.ModifiersAlt.Get()
                     && !Configurations.ModifiersShift.Get()
                     && !Configurations.ModifiersControl.Get();
 
-            FindMenuItemByTag(_icon.Menu, "ModifiersAlt")?.IsChecked =
+            FindMenuItemByTag(_icon.Menu, nameof(SH.ModifiersAlt))?.IsChecked =
                 Configurations.ModifiersAlt.Get();
 
-            FindMenuItemByTag(_icon.Menu, "ModifiersControl")?.IsChecked =
+            FindMenuItemByTag(_icon.Menu, nameof(SH.ModifiersControl))?.IsChecked =
                 Configurations.ModifiersControl.Get();
 
-            FindMenuItemByTag(_icon.Menu, "ModifiersShift")?.IsChecked =
+            FindMenuItemByTag(_icon.Menu, nameof(SH.ModifiersShift))?.IsChecked =
                 Configurations.ModifiersShift.Get();
         };
     }
