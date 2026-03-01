@@ -4,7 +4,7 @@ namespace SecondaryClick;
 
 /// <summary>
 /// Provides localized string resources for the SecondaryClick application.
-/// Supports multiple languages including Simplified Chinese, Traditional Chinese, Japanese, and English.
+/// Supports multiple languages.
 /// </summary>
 internal static class Globalizations
 {
@@ -66,104 +66,494 @@ internal static class Globalizations
         private static string GetResources(string name)
         {
             CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
+            string cultureName = culture.Name.ToLowerInvariant();
 
-            // Determine the appropriate localization based on the current UI culture
-            if (culture.Name.StartsWith("zh", StringComparison.OrdinalIgnoreCase))
+            // Chinese (Simplified and Traditional)
+            if (cultureName.StartsWith("zh"))
             {
-                if (culture.Name == "zh")
+                if (cultureName == "zh")
                 {
-                    return ReturnHans(name);
-                }
-                else
-                {
-                    CultureInfo current = culture;
-                    while (current.Name != "zh-Hant"
-                        && current.Name != "zh-Hans"
-                        && current.Parent != null
-                        && current.Parent != CultureInfo.InvariantCulture)
-                    {
-                        current = current.Parent;
-                    }
-
-                    if (current.Name == "zh-Hant")
-                    {
-                        return ReturnHant(name);
-                    }
-                    else
-                    {
-                        return ReturnHans(name);
-                    }
+                    return ReturnSimplifiedChinese(name);
                 }
 
-                // Return Simplified Chinese strings
-                static string ReturnHans(string name)
+                CultureInfo current = culture;
+                while (current.Name != "zh-Hant"
+                    && current.Name != "zh-Hans"
+                    && current.Parent != null
+                    && current.Parent != CultureInfo.InvariantCulture)
                 {
-                    return name switch
-                    {
-                        nameof(Touchpads) => "触控辅助",
-                        nameof(TwoFingerTap) => "双指点按或轻点",
-                        nameof(RightClickZone) => "点按右下角",
-                        nameof(Modifiers) => "键盘辅助",
-                        nameof(ModifiersOff) => "关",
-                        nameof(ModifiersAlt) => "Alt 键",
-                        nameof(ModifiersControl) => "Control 键",
-                        nameof(ModifiersShift) => "Shift 键",
-                        nameof(Exit) => "退出",
-                        _ => name,
-                    };
+                    current = current.Parent;
                 }
 
-                // Return Traditional Chinese strings
-                static string ReturnHant(string name)
-                {
-                    return name switch
-                    {
-                        nameof(Touchpads) => "觸控輔助",
-                        nameof(TwoFingerTap) => "雙指點按或輕點",
-                        nameof(RightClickZone) => "點按右下角",
-                        nameof(Modifiers) => "鍵盤輔助",
-                        nameof(ModifiersOff) => "關",
-                        nameof(ModifiersAlt) => "Alt 鍵",
-                        nameof(ModifiersControl) => "Control 鍵",
-                        nameof(ModifiersShift) => "Shift 鍵",
-                        nameof(Exit) => "退出",
-                        _ => name,
-                    };
-                }
+                return current.Name == "zh-Hant"
+                    ? ReturnTraditionalChinese(name)
+                        : ReturnSimplifiedChinese(name);
             }
-            // Return Japanese strings
-            else if (culture.Name.StartsWith("ja", StringComparison.OrdinalIgnoreCase))
+
+            // Language-specific returns
+            return cultureName switch
             {
-                return name switch
-                {
-                    nameof(Touchpads) => "タッチパッドのアクセシビリティ",
-                    nameof(TwoFingerTap) => "2 本指でクリック",
-                    nameof(RightClickZone) => "右下隅をクリック",
-                    nameof(Modifiers) => "キーボードのアクセシビリティ",
-                    nameof(ModifiersOff) => "オフ",
-                    nameof(ModifiersAlt) => "Alt キー",
-                    nameof(ModifiersControl) => "Control キー",
-                    nameof(ModifiersShift) => "Shift キー",
-                    nameof(Exit) => "終了",
-                    _ => name,
-                };
-            }
-            else
-            {
-                return name switch
-                {
-                    nameof(Touchpads) => "Touchpad Accessibility",
-                    nameof(TwoFingerTap) => "Tap with two fingers",
-                    nameof(RightClickZone) => "Click in bottom right corner",
-                    nameof(Modifiers) => "Keyboard Accessibility",
-                    nameof(ModifiersOff) => "Off",
-                    nameof(ModifiersAlt) => "Alt Key",
-                    nameof(ModifiersControl) => "Control Key",
-                    nameof(ModifiersShift) => "Shift Key",
-                    nameof(Exit) => "Exit",
-                    _ => name,
-                };
-            }
+                // Arabic
+                string c when c.StartsWith("ar") => ReturnArabic(name),
+                // Hungarian
+                string c when c.StartsWith("hu-HU") => ReturnHungarian(name),
+                // Slovak
+                string c when c.StartsWith("sk") => ReturnSlovak(name),
+                // Indonesian
+                string c when c.StartsWith("id-ID") => ReturnIndonesian(name),
+                // Korean
+                string c when c.StartsWith("ko") => ReturnKorean(name),
+                // Catalan
+                string c when c.StartsWith("ca") => ReturnCatalan(name),
+                // German
+                string c when c.StartsWith("de") => ReturnGerman(name),
+                // Spanish
+                string c when c.StartsWith("es") => ReturnSpanish(name),
+                // French
+                string c when c.StartsWith("fr") => ReturnFrench(name),
+                // Japanese
+                string c when c.StartsWith("ja") => ReturnJapanese(name),
+                // Italian
+                string c when c.StartsWith("it") => ReturnItalian(name),
+                // Norwegian
+                string c when c.StartsWith("nb-NO") => ReturnNorwegian(name),
+                // Dutch
+                string c when c.StartsWith("nl-NL") => ReturnDutch(name),
+                // Polish
+                string c when c.StartsWith("pl") => ReturnPolish(name),
+                // Portuguese Brazil
+                string c when c.StartsWith("pt-BR") => ReturnPortugueseBrazil(name),
+                // Portuguese Portugal
+                string c when c.StartsWith("pt-PT") => ReturnPortuguesePortugal(name),
+                // Russian
+                string c when c.StartsWith("ru-RU") => ReturnRussian(name),
+                // Turkish
+                string c when c.StartsWith("tr-TR") => ReturnTurkish(name),
+                // Ukrainian
+                string c when c.StartsWith("uk-UA") => ReturnUkrainian(name),
+                // Vietnamese
+                string c when c.StartsWith("vi") => ReturnVietnamese(name),
+                // Marathi
+                string c when c.StartsWith("mr") => ReturnMarathi(name),
+                // Hindi
+                string c when c.StartsWith("hi") => ReturnHindi(name),
+                // Hebrew
+                string c when c.StartsWith("he") => ReturnHebrew(name),
+                // Greek
+                string c when c.StartsWith("el") => ReturnGreek(name),
+                // Swedish
+                string c when c.StartsWith("sv") => ReturnSwedish(name),
+                // Romanian
+                string c when c.StartsWith("ro") => ReturnRomanian(name),
+                // Default to English
+                _ => ReturnEnglish(name),
+            };
         }
+
+        private static string ReturnSimplifiedChinese(string name) => name switch
+        {
+            nameof(Touchpads) => "触控辅助",
+            nameof(TwoFingerTap) => "双指点按或轻点",
+            nameof(RightClickZone) => "点按右下角",
+            nameof(Modifiers) => "键盘辅助",
+            nameof(ModifiersOff) => "关",
+            nameof(ModifiersAlt) => "Alt 键",
+            nameof(ModifiersControl) => "Control 键",
+            nameof(ModifiersShift) => "Shift 键",
+            nameof(Exit) => "退出",
+            _ => name,
+        };
+
+        private static string ReturnTraditionalChinese(string name) => name switch
+        {
+            nameof(Touchpads) => "觸控輔助",
+            nameof(TwoFingerTap) => "雙指點按或輕點",
+            nameof(RightClickZone) => "點按右下角",
+            nameof(Modifiers) => "鍵盤輔助",
+            nameof(ModifiersOff) => "關",
+            nameof(ModifiersAlt) => "Alt 鍵",
+            nameof(ModifiersControl) => "Control 鍵",
+            nameof(ModifiersShift) => "Shift 鍵",
+            nameof(Exit) => "退出",
+            _ => name,
+        };
+
+        private static string ReturnJapanese(string name) => name switch
+        {
+            nameof(Touchpads) => "タッチパッドのアクセシビリティ",
+            nameof(TwoFingerTap) => "2 本指でクリック",
+            nameof(RightClickZone) => "右下隅をクリック",
+            nameof(Modifiers) => "キーボードのアクセシビリティ",
+            nameof(ModifiersOff) => "オフ",
+            nameof(ModifiersAlt) => "Alt キー",
+            nameof(ModifiersControl) => "Control キー",
+            nameof(ModifiersShift) => "Shift キー",
+            nameof(Exit) => "終了",
+            _ => name,
+        };
+
+        private static string ReturnEnglish(string name) => name switch
+        {
+            nameof(Touchpads) => "Touchpad Accessibility",
+            nameof(TwoFingerTap) => "Tap with two fingers",
+            nameof(RightClickZone) => "Click in bottom right corner",
+            nameof(Modifiers) => "Keyboard Accessibility",
+            nameof(ModifiersOff) => "Off",
+            nameof(ModifiersAlt) => "Alt Key",
+            nameof(ModifiersControl) => "Control Key",
+            nameof(ModifiersShift) => "Shift Key",
+            nameof(Exit) => "Exit",
+            _ => name,
+        };
+
+        private static string ReturnArabic(string name) => name switch
+        {
+            nameof(Touchpads) => "إمكانية الوصول للوحة اللمس",
+            nameof(TwoFingerTap) => "اضغط بإصبعين",
+            nameof(RightClickZone) => "انقر في الزاوية السفلى اليمنى",
+            nameof(Modifiers) => "إمكانية الوصول للوحة المفاتيح",
+            nameof(ModifiersOff) => "إيقاف",
+            nameof(ModifiersAlt) => "مفتاح Alt",
+            nameof(ModifiersControl) => "مفتاح Control",
+            nameof(ModifiersShift) => "مفتاح Shift",
+            nameof(Exit) => "خروج",
+            _ => name,
+        };
+
+        private static string ReturnHungarian(string name) => name switch
+        {
+            nameof(Touchpads) => "Szöveggadérnelem elérhetősége",
+            nameof(TwoFingerTap) => "Koppintás két ujjal",
+            nameof(RightClickZone) => "Koppintás a jobb alsó sarokban",
+            nameof(Modifiers) => "Billentyűzet elérhetősége",
+            nameof(ModifiersOff) => "Kikapcsolás",
+            nameof(ModifiersAlt) => "Alt billentyű",
+            nameof(ModifiersControl) => "Ctrl billentyű",
+            nameof(ModifiersShift) => "Shift billentyű",
+            nameof(Exit) => "Kilépés",
+            _ => name,
+        };
+
+        private static string ReturnSlovak(string name) => name switch
+        {
+            nameof(Touchpads) => "Dostupnosť dotykovej podložky",
+            nameof(TwoFingerTap) => "Klepnutie dvoma prstami",
+            nameof(RightClickZone) => "Klepnutie v pravom dolnom rohu",
+            nameof(Modifiers) => "Dostupnosť klávesnice",
+            nameof(ModifiersOff) => "Vypnuté",
+            nameof(ModifiersAlt) => "Kláves Alt",
+            nameof(ModifiersControl) => "Kláves Control",
+            nameof(ModifiersShift) => "Kláves Shift",
+            nameof(Exit) => "Ukončenie",
+            _ => name,
+        };
+
+        private static string ReturnIndonesian(string name) => name switch
+        {
+            nameof(Touchpads) => "Aksesibilitas Touchpad",
+            nameof(TwoFingerTap) => "Ketuk dengan dua jari",
+            nameof(RightClickZone) => "Klik di sudut kanan bawah",
+            nameof(Modifiers) => "Aksesibilitas Keyboard",
+            nameof(ModifiersOff) => "Nonaktif",
+            nameof(ModifiersAlt) => "Tombol Alt",
+            nameof(ModifiersControl) => "Tombol Control",
+            nameof(ModifiersShift) => "Tombol Shift",
+            nameof(Exit) => "Keluar",
+            _ => name,
+        };
+
+        private static string ReturnKorean(string name) => name switch
+        {
+            nameof(Touchpads) => "터치패드 접근성",
+            nameof(TwoFingerTap) => "두 손가락으로 탭",
+            nameof(RightClickZone) => "오른쪽 아래 모서리 클릭",
+            nameof(Modifiers) => "키보드 접근성",
+            nameof(ModifiersOff) => "끄기",
+            nameof(ModifiersAlt) => "Alt 키",
+            nameof(ModifiersControl) => "Control 키",
+            nameof(ModifiersShift) => "Shift 키",
+            nameof(Exit) => "종료",
+            _ => name,
+        };
+
+        private static string ReturnCatalan(string name) => name switch
+        {
+            nameof(Touchpads) => "Accessibilitat de la placa tàctil",
+            nameof(TwoFingerTap) => "Tocada amb dos dits",
+            nameof(RightClickZone) => "Clic a la cantonada inferior dreta",
+            nameof(Modifiers) => "Accessibilitat del teclat",
+            nameof(ModifiersOff) => "Desactivat",
+            nameof(ModifiersAlt) => "Tecla Alt",
+            nameof(ModifiersControl) => "Tecla Control",
+            nameof(ModifiersShift) => "Tecla Shift",
+            nameof(Exit) => "Sortir",
+            _ => name,
+        };
+
+        private static string ReturnGerman(string name) => name switch
+        {
+            nameof(Touchpads) => "Touchpad-Barrierefreiheit",
+            nameof(TwoFingerTap) => "Mit zwei Fingern tippen",
+            nameof(RightClickZone) => "In der unteren rechten Ecke klicken",
+            nameof(Modifiers) => "Tastatur-Barrierefreiheit",
+            nameof(ModifiersOff) => "Aus",
+            nameof(ModifiersAlt) => "Alt-Taste",
+            nameof(ModifiersControl) => "Strg-Taste",
+            nameof(ModifiersShift) => "Umschalt-Taste",
+            nameof(Exit) => "Beenden",
+            _ => name,
+        };
+
+        private static string ReturnSpanish(string name) => name switch
+        {
+            nameof(Touchpads) => "Accesibilidad de panel táctil",
+            nameof(TwoFingerTap) => "Tocar con dos dedos",
+            nameof(RightClickZone) => "Hacer clic en la esquina inferior derecha",
+            nameof(Modifiers) => "Accesibilidad del teclado",
+            nameof(ModifiersOff) => "Desactivado",
+            nameof(ModifiersAlt) => "Tecla Alt",
+            nameof(ModifiersControl) => "Tecla Control",
+            nameof(ModifiersShift) => "Tecla Mayús",
+            nameof(Exit) => "Salir",
+            _ => name,
+        };
+
+        private static string ReturnFrench(string name) => name switch
+        {
+            nameof(Touchpads) => "Accessibilité du pavé tactile",
+            nameof(TwoFingerTap) => "Tapoter avec deux doigts",
+            nameof(RightClickZone) => "Cliquer dans le coin inférieur droit",
+            nameof(Modifiers) => "Accessibilité du clavier",
+            nameof(ModifiersOff) => "Désactivé",
+            nameof(ModifiersAlt) => "Touche Alt",
+            nameof(ModifiersControl) => "Touche Ctrl",
+            nameof(ModifiersShift) => "Touche Maj",
+            nameof(Exit) => "Quitter",
+            _ => name,
+        };
+
+        private static string ReturnItalian(string name) => name switch
+        {
+            nameof(Touchpads) => "Accessibilità trackpad",
+            nameof(TwoFingerTap) => "Tocca con due dita",
+            nameof(RightClickZone) => "Fai clic nell'angolo inferiore destro",
+            nameof(Modifiers) => "Accessibilità tastiera",
+            nameof(ModifiersOff) => "Disattivato",
+            nameof(ModifiersAlt) => "Tasto Alt",
+            nameof(ModifiersControl) => "Tasto Ctrl",
+            nameof(ModifiersShift) => "Tasto Maiusc",
+            nameof(Exit) => "Esci",
+            _ => name,
+        };
+
+        private static string ReturnNorwegian(string name) => name switch
+        {
+            nameof(Touchpads) => "Tilgjengelighet for styreplaten",
+            nameof(TwoFingerTap) => "Trykk med to fingre",
+            nameof(RightClickZone) => "Klikk i nedre høyre hjørne",
+            nameof(Modifiers) => "Tilgjengelighet for tastatur",
+            nameof(ModifiersOff) => "Av",
+            nameof(ModifiersAlt) => "Alt-tasten",
+            nameof(ModifiersControl) => "Ctrl-tasten",
+            nameof(ModifiersShift) => "Shift-tasten",
+            nameof(Exit) => "Avslutt",
+            _ => name,
+        };
+
+        private static string ReturnDutch(string name) => name switch
+        {
+            nameof(Touchpads) => "Touchpad-toegankelijkheid",
+            nameof(TwoFingerTap) => "Tikken met twee vingers",
+            nameof(RightClickZone) => "Klikken in de rechter benedenhoek",
+            nameof(Modifiers) => "Toetsenbordetoegankelijkheid",
+            nameof(ModifiersOff) => "Uit",
+            nameof(ModifiersAlt) => "Alt-toets",
+            nameof(ModifiersControl) => "Ctrl-toets",
+            nameof(ModifiersShift) => "Shift-toets",
+            nameof(Exit) => "Afsluiten",
+            _ => name,
+        };
+
+        private static string ReturnPolish(string name) => name switch
+        {
+            nameof(Touchpads) => "Ułatwienia dostępu dla trackpada",
+            nameof(TwoFingerTap) => "Dotknięcie dwoma palcami",
+            nameof(RightClickZone) => "Kliknięcie w prawym dolnym rogu",
+            nameof(Modifiers) => "Ułatwienia dostępu dla klawiatury",
+            nameof(ModifiersOff) => "Wyłączono",
+            nameof(ModifiersAlt) => "Klawisz Alt",
+            nameof(ModifiersControl) => "Klawisz Ctrl",
+            nameof(ModifiersShift) => "Klawisz Shift",
+            nameof(Exit) => "Wyjście",
+            _ => name,
+        };
+
+        private static string ReturnPortugueseBrazil(string name) => name switch
+        {
+            nameof(Touchpads) => "Acessibilidade do Touchpad",
+            nameof(TwoFingerTap) => "Tocar com dois dedos",
+            nameof(RightClickZone) => "Clicar no canto inferior direito",
+            nameof(Modifiers) => "Acessibilidade do Teclado",
+            nameof(ModifiersOff) => "Desativado",
+            nameof(ModifiersAlt) => "Tecla Alt",
+            nameof(ModifiersControl) => "Tecla Ctrl",
+            nameof(ModifiersShift) => "Tecla Shift",
+            nameof(Exit) => "Sair",
+            _ => name,
+        };
+
+        private static string ReturnPortuguesePortugal(string name) => name switch
+        {
+            nameof(Touchpads) => "Acessibilidade do Touchpad",
+            nameof(TwoFingerTap) => "Toque com dois dedos",
+            nameof(RightClickZone) => "Clique no canto inferior direito",
+            nameof(Modifiers) => "Acessibilidade do Teclado",
+            nameof(ModifiersOff) => "Desativado",
+            nameof(ModifiersAlt) => "Tecla Alt",
+            nameof(ModifiersControl) => "Tecla Ctrl",
+            nameof(ModifiersShift) => "Tecla Shift",
+            nameof(Exit) => "Sair",
+            _ => name,
+        };
+
+        private static string ReturnRussian(string name) => name switch
+        {
+            nameof(Touchpads) => "Специальные возможности сенсорной панели",
+            nameof(TwoFingerTap) => "Касание двумя пальцами",
+            nameof(RightClickZone) => "Нажмите в правом нижнем углу",
+            nameof(Modifiers) => "Специальные возможности клавиатуры",
+            nameof(ModifiersOff) => "Отключено",
+            nameof(ModifiersAlt) => "Клавиша Alt",
+            nameof(ModifiersControl) => "Клавиша Ctrl",
+            nameof(ModifiersShift) => "Клавиша Shift",
+            nameof(Exit) => "Выход",
+            _ => name,
+        };
+
+        private static string ReturnTurkish(string name) => name switch
+        {
+            nameof(Touchpads) => "Dokunmatik Yüzey Erişilebilirliği",
+            nameof(TwoFingerTap) => "İki parmakla dokunma",
+            nameof(RightClickZone) => "Sağ alt köşede tıklama",
+            nameof(Modifiers) => "Klavye Erişilebilirliği",
+            nameof(ModifiersOff) => "Kapalı",
+            nameof(ModifiersAlt) => "Alt Tuşu",
+            nameof(ModifiersControl) => "Ctrl Tuşu",
+            nameof(ModifiersShift) => "Shift Tuşu",
+            nameof(Exit) => "Çıkış",
+            _ => name,
+        };
+
+        private static string ReturnUkrainian(string name) => name switch
+        {
+            nameof(Touchpads) => "Спеціальні можливості сенсорної панелі",
+            nameof(TwoFingerTap) => "Дотик двома пальцями",
+            nameof(RightClickZone) => "Натисніть у правому нижньому куті",
+            nameof(Modifiers) => "Спеціальні можливості клавіатури",
+            nameof(ModifiersOff) => "Відключено",
+            nameof(ModifiersAlt) => "Клавіша Alt",
+            nameof(ModifiersControl) => "Клавіша Ctrl",
+            nameof(ModifiersShift) => "Клавіша Shift",
+            nameof(Exit) => "Вихід",
+            _ => name,
+        };
+
+        private static string ReturnVietnamese(string name) => name switch
+        {
+            nameof(Touchpads) => "Khả năng truy cập Touchpad",
+            nameof(TwoFingerTap) => "Chạm bằng hai ngón tay",
+            nameof(RightClickZone) => "Nhấp ở góc dưới bên phải",
+            nameof(Modifiers) => "Khả năng truy cập Bàn phím",
+            nameof(ModifiersOff) => "Tắt",
+            nameof(ModifiersAlt) => "Phím Alt",
+            nameof(ModifiersControl) => "Phím Ctrl",
+            nameof(ModifiersShift) => "Phím Shift",
+            nameof(Exit) => "Thoát",
+            _ => name,
+        };
+
+        private static string ReturnMarathi(string name) => name switch
+        {
+            nameof(Touchpads) => "टचपॅड प्रवेशयोग्यता",
+            nameof(TwoFingerTap) => "दोन बोटांनी टच करा",
+            nameof(RightClickZone) => "उजव्या तळाच्या कोनात क्लिक करा",
+            nameof(Modifiers) => "कीबोर्ड प्रवेशयोग्यता",
+            nameof(ModifiersOff) => "बंद",
+            nameof(ModifiersAlt) => "Alt की",
+            nameof(ModifiersControl) => "Control की",
+            nameof(ModifiersShift) => "Shift की",
+            nameof(Exit) => "बाहेर पडा",
+            _ => name,
+        };
+
+        private static string ReturnHindi(string name) => name switch
+        {
+            nameof(Touchpads) => "टचपैड पहुंच",
+            nameof(TwoFingerTap) => "दो उंगलियों से टैप करें",
+            nameof(RightClickZone) => "दाएं निचले कोने में क्लिक करें",
+            nameof(Modifiers) => "कीबोर्ड पहुंच",
+            nameof(ModifiersOff) => "बंद",
+            nameof(ModifiersAlt) => "Alt कुंजी",
+            nameof(ModifiersControl) => "Control कुंजी",
+            nameof(ModifiersShift) => "Shift कुंजी",
+            nameof(Exit) => "बाहर निकलें",
+            _ => name,
+        };
+
+        private static string ReturnHebrew(string name) => name switch
+        {
+            nameof(Touchpads) => "נגישות לוח הגעה",
+            nameof(TwoFingerTap) => "הקש בשני אצבעות",
+            nameof(RightClickZone) => "קליק בפינה התחתונה הימנית",
+            nameof(Modifiers) => "נגישות מקלדת",
+            nameof(ModifiersOff) => "כבוי",
+            nameof(ModifiersAlt) => "מקש Alt",
+            nameof(ModifiersControl) => "מקש Ctrl",
+            nameof(ModifiersShift) => "מקש Shift",
+            nameof(Exit) => "יציאה",
+            _ => name,
+        };
+
+        private static string ReturnGreek(string name) => name switch
+        {
+            nameof(Touchpads) => "Προσιτότητα Touchpad",
+            nameof(TwoFingerTap) => "Κρότη με δύο δάχτυλα",
+            nameof(RightClickZone) => "Κλικ στη δεξιά κάτω γωνία",
+            nameof(Modifiers) => "Προσιτότητα Πληκτρολογίου",
+            nameof(ModifiersOff) => "Ανενεργό",
+            nameof(ModifiersAlt) => "Πλήκτρο Alt",
+            nameof(ModifiersControl) => "Πλήκτρο Ctrl",
+            nameof(ModifiersShift) => "Πλήκτρο Shift",
+            nameof(Exit) => "Έξοδος",
+            _ => name,
+        };
+
+        private static string ReturnSwedish(string name) => name switch
+        {
+            nameof(Touchpads) => "Bara Trackpad-tillgänglighet",
+            nameof(TwoFingerTap) => "Tryck med två fingrar",
+            nameof(RightClickZone) => "Klicka i det nedre högra hörnet",
+            nameof(Modifiers) => "Tangentbordstillgänglighet",
+            nameof(ModifiersOff) => "Av",
+            nameof(ModifiersAlt) => "Alt-tangenten",
+            nameof(ModifiersControl) => "Ctrl-tangenten",
+            nameof(ModifiersShift) => "Shift-tangenten",
+            nameof(Exit) => "Avsluta",
+            _ => name,
+        };
+
+        private static string ReturnRomanian(string name) => name switch
+        {
+            nameof(Touchpads) => "Accesibilitate Touchpad",
+            nameof(TwoFingerTap) => "Atingeți cu două degete",
+            nameof(RightClickZone) => "Faceți clic în colțul din dreapta jos",
+            nameof(Modifiers) => "Accesibilitate tastatură",
+            nameof(ModifiersOff) => "Dezactivat",
+            nameof(ModifiersAlt) => "Tasta Alt",
+            nameof(ModifiersControl) => "Tasta Control",
+            nameof(ModifiersShift) => "Tasta Shift",
+            nameof(Exit) => "Ieșire",
+            _ => name,
+        };
     }
 }
