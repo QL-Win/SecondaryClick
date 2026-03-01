@@ -3,11 +3,16 @@
 namespace SecondaryClick;
 
 /// <summary>
-/// This application has no main window/no settings window.
-/// This window is only used to speed up the creation of trayicon's right-click menu and is destroyed immediately after creation.
+/// A hidden window used internally for system tray functionality.
+/// SecondaryClick is a background application with no visible user interface.
+/// This window is created temporarily to initialize the tray icon context and is then hidden.
 /// </summary>
 public partial class TrayIconWindow : Window, IDisposable
 {
+    /// <summary>
+    /// Initializes a new instance of the TrayIconWindow class.
+    /// Creates an invisible, transparent window with no taskbar presence.
+    /// </summary>
     public TrayIconWindow()
     {
         Title = "TrayIconWindow";
@@ -19,6 +24,9 @@ public partial class TrayIconWindow : Window, IDisposable
         WindowStyle = WindowStyle.None;
     }
 
+    /// <summary>
+    /// Disposes the window and releases its resources.
+    /// </summary>
     public void Dispose()
     {
         Close();

@@ -2,24 +2,72 @@
 
 namespace SecondaryClick;
 
+/// <summary>
+/// Provides localized string resources for the SecondaryClick application.
+/// Supports multiple languages including Simplified Chinese, Traditional Chinese, Japanese, and English.
+/// </summary>
 internal static class Globalizations
 {
+    /// <summary>
+    /// Provides access to localized strings (SH = String Helper).
+    /// </summary>
     public static class SH
     {
+        /// <summary>
+        /// Gets the localized string for "Touchpads" feature.
+        /// </summary>
         public static string Touchpads => GetResources(nameof(Touchpads));
+
+        /// <summary>
+        /// Gets the localized string for "Two Finger Tap" gesture.
+        /// </summary>
         public static string TwoFingerTap => GetResources(nameof(TwoFingerTap));
+
+        /// <summary>
+        /// Gets the localized string for "Right Click Zone" gesture.
+        /// </summary>
         public static string RightClickZone => GetResources(nameof(RightClickZone));
+
+        /// <summary>
+        /// Gets the localized string for "Keyboard Modifiers" feature.
+        /// </summary>
         public static string Modifiers => GetResources(nameof(Modifiers));
+
+        /// <summary>
+        /// Gets the localized string for "Modifiers Off".
+        /// </summary>
         public static string ModifiersOff => GetResources(nameof(ModifiersOff));
+
+        /// <summary>
+        /// Gets the localized string for "Alt Key" modifier.
+        /// </summary>
         public static string ModifiersAlt => GetResources(nameof(ModifiersAlt));
+
+        /// <summary>
+        /// Gets the localized string for "Control Key" modifier.
+        /// </summary>
         public static string ModifiersControl => GetResources(nameof(ModifiersControl));
+
+        /// <summary>
+        /// Gets the localized string for "Shift Key" modifier.
+        /// </summary>
         public static string ModifiersShift => GetResources(nameof(ModifiersShift));
+
+        /// <summary>
+        /// Gets the localized string for "Exit" action.
+        /// </summary>
         public static string Exit => GetResources(nameof(Exit));
 
+        /// <summary>
+        /// Retrieves the localized string for the given resource name based on the current UI culture.
+        /// </summary>
+        /// <param name=\"name\">The resource name to retrieve.</param>
+        /// <returns>The localized string value, or the original name if no translation is found.</returns>
         private static string GetResources(string name)
         {
             CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
 
+            // Determine the appropriate localization based on the current UI culture
             if (culture.Name.StartsWith("zh", StringComparison.OrdinalIgnoreCase))
             {
                 if (culture.Name == "zh")
@@ -47,6 +95,7 @@ internal static class Globalizations
                     }
                 }
 
+                // Return Simplified Chinese strings
                 static string ReturnHans(string name)
                 {
                     return name switch
@@ -64,6 +113,7 @@ internal static class Globalizations
                     };
                 }
 
+                // Return Traditional Chinese strings
                 static string ReturnHant(string name)
                 {
                     return name switch
@@ -81,6 +131,7 @@ internal static class Globalizations
                     };
                 }
             }
+            // Return Japanese strings
             else if (culture.Name.StartsWith("ja", StringComparison.OrdinalIgnoreCase))
             {
                 return name switch
