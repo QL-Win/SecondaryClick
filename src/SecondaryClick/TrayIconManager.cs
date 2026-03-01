@@ -1,3 +1,4 @@
+using Fischless.Configuration;
 using SecondaryClick.Gestures;
 using SecondaryClick.Gestures.Touchpads;
 using SecondaryClick.WinApi;
@@ -18,7 +19,27 @@ internal sealed partial class TrayIconManager : IDisposable
     private TrayIconManager()
     {
         _recognizerHolder = new();
-        //_recognizerHolder.ModifiersRecognizer.SetEnabled(true);
+
+        if (Configurations.ModifiersAlt.Get())
+        {
+            _recognizerHolder.ModifiersRecognizer.ActivationModifiers
+                |= Gestures.Modifiers.GestureModifiers.Alt;
+        }
+        if (Configurations.ModifiersControl.Get())
+        {
+            _recognizerHolder.ModifiersRecognizer.ActivationModifiers
+                |= Gestures.Modifiers.GestureModifiers.Control;
+        }
+        if (Configurations.ModifiersShift.Get())
+        {
+            _recognizerHolder.ModifiersRecognizer.ActivationModifiers
+                |= Gestures.Modifiers.GestureModifiers.Shift;
+        }
+        _recognizerHolder.ModifiersRecognizer.SetEnabled(
+            Configurations.ModifiersAlt.Get()
+                | Configurations.ModifiersControl.Get()
+                | Configurations.ModifiersShift.Get()
+        );
 
         _icon = new TrayIconHost
         {
@@ -86,24 +107,60 @@ internal sealed partial class TrayIconManager : IDisposable
                             Tag = "ModifiersOff",
                             Header = "关",
                             IsChecked = false,
+                            Command = static _ =>
+                            {
+                                Configurations.ModifiersAlt.Set(false);
+                                Configurations.ModifiersControl.Set(false);
+                                Configurations.ModifiersShift.Set(false);
+                                ConfigurationManager.Save();
+
+                                GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(false);
+                            },
                         },
                         new TrayMenuItem
                         {
                             Tag = "ModifiersAlt",
                             Header = "Alt 键",
                             IsChecked = true,
+                            Command = static _ =>
+                            {
+                                Configurations.ModifiersAlt.Set(!Configurations.ModifiersAlt.Get());
+                                ConfigurationManager.Save();
+
+                                GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
+                                    |= Gestures.Modifiers.GestureModifiers.Alt;
+                                GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(true);
+                            },
                         },
                         new TrayMenuItem
                         {
                             Tag = "ModifiersControl",
                             Header = "Control 键",
                             IsChecked = false,
+                            Command = static _ =>
+                            {
+                                Configurations.ModifiersControl.Set(!Configurations.ModifiersControl.Get());
+                                ConfigurationManager.Save();
+
+                                GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
+                                    |= Gestures.Modifiers.GestureModifiers.Control;
+                                GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(true);
+                            },
                         },
                         new TrayMenuItem
                         {
                             Tag = "ModifiersShift",
                             Header = "Shift 键",
                             IsChecked = false,
+                            Command = static _ =>
+                            {
+                                Configurations.ModifiersShift.Set(!Configurations.ModifiersShift.Get());
+                                ConfigurationManager.Save();
+
+                                GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
+                                    |= Gestures.Modifiers.GestureModifiers.Shift;
+                                GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(true);
+                            },
                         },
                     ]
                 },
@@ -124,6 +181,20 @@ internal sealed partial class TrayIconManager : IDisposable
 
             FindMenuItemByTag(_icon.Menu, "RightClickZone")?.IsChecked =
                 _recognizerHolder.TouchpadRecognizer.IsRightClickZone;
+
+            FindMenuItemByTag(_icon.Menu, "ModifiersOff")?.IsChecked =
+                !Configurations.ModifiersAlt.Get()
+                    && !Configurations.ModifiersShift.Get()
+                    && !Configurations.ModifiersControl.Get();
+
+            FindMenuItemByTag(_icon.Menu, "ModifiersAlt")?.IsChecked =
+                Configurations.ModifiersAlt.Get();
+
+            FindMenuItemByTag(_icon.Menu, "ModifiersControl")?.IsChecked =
+                Configurations.ModifiersControl.Get();
+
+            FindMenuItemByTag(_icon.Menu, "ModifiersShift")?.IsChecked =
+                Configurations.ModifiersShift.Get();
         };
     }
 

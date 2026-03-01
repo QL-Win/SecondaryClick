@@ -20,10 +20,16 @@ public partial class App : Application
 
     public App()
     {
-        ShutdownMode = ShutdownMode.OnExplicitShutdown;
+        string configFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SecondaryClick", "config.yaml");
 
+        if (!Directory.Exists(Path.GetDirectoryName(configFilePath)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(configFilePath));
+        }
         ConfigurationManager.ConfigurationSerializer = new YamlConfigurationSerializer();
-        ConfigurationManager.Setup(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SecondaryClick", "config.yaml"));
+        ConfigurationManager.Setup(configFilePath);
+
+        ShutdownMode = ShutdownMode.OnExplicitShutdown;
     }
 
     protected override void OnStartup(StartupEventArgs e)
