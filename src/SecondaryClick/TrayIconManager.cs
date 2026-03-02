@@ -255,12 +255,12 @@ internal sealed partial class TrayIconManager : IDisposable
     /// <summary>
     /// Displays a balloon tip notification in the system tray.
     /// </summary>
-    /// <param name=\"title\">The title of the notification.</param>
-    /// <param name=\"content\">The content/message of the notification.</param>
-    /// <param name=\"isError\">If true, shows an error icon; otherwise shows an informational icon.</param>
-    /// <param name=\"timeout\">The time in milliseconds before the notification automatically closes.</param>
-    /// <param name=\"clickEvent\">Optional callback when the notification is clicked.</param>
-    /// <param name=\"closeEvent\">Optional callback when the notification is closed.</param>
+    /// <param name="title">The title of the notification.</param>
+    /// <param name="content">The content/message of the notification.</param>
+    /// <param name="isError">If true, shows an error icon; otherwise shows an informational icon.</param>
+    /// <param name="timeout">The time in milliseconds before the notification automatically closes.</param>
+    /// <param name="clickEvent">Optional callback when the notification is clicked.</param>
+    /// <param name="closeEvent">Optional callback when the notification is closed.</param>
     public static void ShowNotification(string title, string content, bool isError = false, int timeout = 5000,
         Action? clickEvent = null,
         Action? closeEvent = null)
