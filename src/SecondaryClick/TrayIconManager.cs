@@ -195,11 +195,14 @@ internal sealed partial class TrayIconManager : IDisposable
 
         _icon.RightClick += (_, _) =>
         {
-            FindMenuItemByTag(_icon.Menu, nameof(SH.TwoFingerTap))?.IsChecked =
-                _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
+            if (PrecisionTouchpadRegistrySettings.IsReadable)
+            {
+                FindMenuItemByTag(_icon.Menu, nameof(SH.TwoFingerTap))?.IsChecked =
+                    _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
 
-            FindMenuItemByTag(_icon.Menu, nameof(SH.RightClickZone))?.IsChecked =
-                _recognizerHolder.TouchpadRecognizer.IsRightClickZone;
+                FindMenuItemByTag(_icon.Menu, nameof(SH.RightClickZone))?.IsChecked =
+                    _recognizerHolder.TouchpadRecognizer.IsRightClickZone;
+            }
 
             FindMenuItemByTag(_icon.Menu, nameof(SH.ModifiersOff))?.IsChecked =
                 !Configurations.ModifiersAlt.Get()
