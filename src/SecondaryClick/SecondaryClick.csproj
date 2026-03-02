@@ -27,8 +27,6 @@
     </PackageReference>
     <PackageReference Include="Antelcat.I18N.WPF" Version="1.1.0" />
     <PackageReference Include="NativeTray" Version="1.0.0" />
-    <PackageReference Include="Fischless.Configuration" Version="1.1.0" />
-    <PackageReference Include="Fischless.Configuration.Yaml" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>

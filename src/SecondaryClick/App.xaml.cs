@@ -1,6 +1,4 @@
-﻿using Fischless.Configuration;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.NativeTray;
 using System.Windows;
 using Application = System.Windows.Application;
@@ -35,15 +33,6 @@ public partial class App : Application
     /// </summary>
     public App()
     {
-        string configFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SecondaryClick", "config.yaml");
-
-        if (!Directory.Exists(Path.GetDirectoryName(configFilePath)))
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(configFilePath));
-        }
-        ConfigurationManager.ConfigurationSerializer = new YamlConfigurationSerializer();
-        ConfigurationManager.Setup(configFilePath);
-
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
     }
 

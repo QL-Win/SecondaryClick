@@ -1,4 +1,3 @@
-using Fischless.Configuration;
 using SecondaryClick.Gestures;
 using SecondaryClick.Gestures.Touchpads;
 using SecondaryClick.WinApi;
@@ -131,7 +130,6 @@ internal sealed partial class TrayIconManager : IDisposable
                                 Configurations.ModifiersAlt.Set(false);
                                 Configurations.ModifiersControl.Set(false);
                                 Configurations.ModifiersShift.Set(false);
-                                ConfigurationManager.Save();
 
                                 GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(false);
                             },
@@ -144,7 +142,6 @@ internal sealed partial class TrayIconManager : IDisposable
                             Command = static _ =>
                             {
                                 Configurations.ModifiersAlt.Set(!Configurations.ModifiersAlt.Get());
-                                ConfigurationManager.Save();
 
                                 GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
                                     |= Gestures.Modifiers.GestureModifiers.Alt;
@@ -159,7 +156,6 @@ internal sealed partial class TrayIconManager : IDisposable
                             Command = static _ =>
                             {
                                 Configurations.ModifiersControl.Set(!Configurations.ModifiersControl.Get());
-                                ConfigurationManager.Save();
 
                                 GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
                                     |= Gestures.Modifiers.GestureModifiers.Control;
@@ -174,7 +170,6 @@ internal sealed partial class TrayIconManager : IDisposable
                             Command = static _ =>
                             {
                                 Configurations.ModifiersShift.Set(!Configurations.ModifiersShift.Get());
-                                ConfigurationManager.Save();
 
                                 GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
                                     |= Gestures.Modifiers.GestureModifiers.Shift;
