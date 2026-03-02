@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using System.Reflection;
 
 namespace SecondaryClick;
 
@@ -7,8 +6,7 @@ namespace SecondaryClick;
 /// Manages application configuration settings with persistent storage.
 /// Stores modifier key configurations (Alt, Shift, Control) used for gesture recognition.
 /// </summary>
-[Obfuscation]
-public static class Configurations
+internal static class Configurations
 {
     /// <summary>
     /// Configuration for Alt key modifier activation. Defaults to false.
@@ -30,18 +28,12 @@ public static class Configurations
 /// Registry-backed configuration definition.
 /// </summary>
 /// <typeparam name="T">Configuration value type.</typeparam>
-public sealed class ConfigurationDefinition<T>
+internal sealed class ConfigurationDefinition<T>(string name, T defaultValue)
 {
     private const string RegistryPath = @"Software\SecondaryClick";
 
-    private readonly string _name;
-    private readonly T _defaultValue;
-
-    public ConfigurationDefinition(string name, T defaultValue)
-    {
-        _name = name;
-        _defaultValue = defaultValue;
-    }
+    private readonly string _name = name;
+    private readonly T _defaultValue = defaultValue;
 
     public T Get()
     {
