@@ -181,6 +181,21 @@ internal sealed partial class TrayIconManager : IDisposable
                 new TraySeparator(),
                 new TrayMenuItem
                 {
+                    Tag = nameof(SH.StartWithWindows),
+                    Header = SH.StartWithWindows,
+                    IsChecked = StartupRegistrySettings.IsEnabled(),
+                    Command = static _ =>
+                    {
+                        bool nextState = !StartupRegistrySettings.IsEnabled();
+                        if (StartupRegistrySettings.SetEnabled(nextState))
+                        {
+                            FindMenuItemByTag(GetInstance()._icon.Menu, nameof(SH.StartWithWindows))!.IsChecked
+                                = StartupRegistrySettings.IsEnabled();
+                        }
+                    },
+                },
+                new TrayMenuItem
+                {
                     Tag = nameof(SH.Exit),
                     Header = SH.Exit,
                     Command = static _ => Application.Current.Shutdown(),
@@ -212,6 +227,9 @@ internal sealed partial class TrayIconManager : IDisposable
 
             FindMenuItemByTag(_icon.Menu, nameof(SH.ModifiersShift))?.IsChecked =
                 Configurations.ModifiersShift.Get();
+
+            FindMenuItemByTag(_icon.Menu, nameof(SH.StartWithWindows))?.IsChecked =
+                StartupRegistrySettings.IsEnabled();
         };
     }
 

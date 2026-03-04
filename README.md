@@ -39,6 +39,7 @@ After launch, SecondaryClick runs in the system tray.
 	- Alt Key
 	- Control Key
 	- Shift Key
+- Optional: enable Start with Windows from tray menu
 
 Settings are saved per user and restored automatically on next launch.
 

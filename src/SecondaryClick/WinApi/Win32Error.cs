@@ -6,6 +6,16 @@
 public partial struct Win32Error
 {
     /// <summary>
+    /// Error code indicating success.
+    /// </summary>
+    public const int ERROR_SUCCESS = 0;
+
+    /// <summary>
+    /// Error code indicating that the specified file was not found.
+    /// </summary>
+    public const int ERROR_FILE_NOT_FOUND = 2;
+
+    /// <summary>
     /// Error code indicating that the data area passed to a system call is too small.
     /// When returned from GetCurrentPackageFullName, it indicates the app is running as a UWP package.
     /// </summary>

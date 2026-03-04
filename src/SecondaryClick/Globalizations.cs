@@ -54,6 +54,11 @@ internal static class Globalizations
         public static string ModifiersShift => GetResources(nameof(ModifiersShift));
 
         /// <summary>
+        /// Gets the localized string for "Start with Windows" option.
+        /// </summary>
+        public static string StartWithWindows => GetResources(nameof(StartWithWindows));
+
+        /// <summary>
         /// Gets the localized string for "Exit" action.
         /// </summary>
         public static string Exit => GetResources(nameof(Exit));
@@ -160,6 +165,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt 键",
             nameof(ModifiersControl) => "Control 键",
             nameof(ModifiersShift) => "Shift 键",
+            nameof(StartWithWindows) => "开机启动",
             nameof(Exit) => "退出",
             _ => name,
         };
@@ -174,6 +180,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt 鍵",
             nameof(ModifiersControl) => "Control 鍵",
             nameof(ModifiersShift) => "Shift 鍵",
+            nameof(StartWithWindows) => "開機啟動",
             nameof(Exit) => "退出",
             _ => name,
         };
@@ -188,6 +195,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt キー",
             nameof(ModifiersControl) => "Control キー",
             nameof(ModifiersShift) => "Shift キー",
+            nameof(StartWithWindows) => "起動時に実行",
             nameof(Exit) => "終了",
             _ => name,
         };
@@ -202,6 +210,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt Key",
             nameof(ModifiersControl) => "Control Key",
             nameof(ModifiersShift) => "Shift Key",
+            nameof(StartWithWindows) => "Start with Windows",
             nameof(Exit) => "Exit",
             _ => name,
         };
@@ -216,6 +225,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "مفتاح Alt",
             nameof(ModifiersControl) => "مفتاح Control",
             nameof(ModifiersShift) => "مفتاح Shift",
+            nameof(StartWithWindows) => "التشغيل مع Windows",
             nameof(Exit) => "خروج",
             _ => name,
         };
@@ -230,6 +240,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt billentyű",
             nameof(ModifiersControl) => "Ctrl billentyű",
             nameof(ModifiersShift) => "Shift billentyű",
+            nameof(StartWithWindows) => "Indítás a Windowszal",
             nameof(Exit) => "Kilépés",
             _ => name,
         };
@@ -244,6 +255,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Kláves Alt",
             nameof(ModifiersControl) => "Kláves Control",
             nameof(ModifiersShift) => "Kláves Shift",
+            nameof(StartWithWindows) => "Spustiť pri štarte Windowsu",
             nameof(Exit) => "Ukončenie",
             _ => name,
         };
@@ -258,6 +270,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Tombol Alt",
             nameof(ModifiersControl) => "Tombol Control",
             nameof(ModifiersShift) => "Tombol Shift",
+            nameof(StartWithWindows) => "Mulai bersama Windows",
             nameof(Exit) => "Keluar",
             _ => name,
         };
@@ -272,6 +285,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt 키",
             nameof(ModifiersControl) => "Control 키",
             nameof(ModifiersShift) => "Shift 키",
+            nameof(StartWithWindows) => "Windows 시작 시 실행",
             nameof(Exit) => "종료",
             _ => name,
         };
@@ -286,6 +300,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Tecla Alt",
             nameof(ModifiersControl) => "Tecla Control",
             nameof(ModifiersShift) => "Tecla Shift",
+            nameof(StartWithWindows) => "Inicia amb Windows",
             nameof(Exit) => "Sortir",
             _ => name,
         };
@@ -300,6 +315,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt-Taste",
             nameof(ModifiersControl) => "Strg-Taste",
             nameof(ModifiersShift) => "Umschalt-Taste",
+            nameof(StartWithWindows) => "Mit Windows starten",
             nameof(Exit) => "Beenden",
             _ => name,
         };
@@ -314,6 +330,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Tecla Alt",
             nameof(ModifiersControl) => "Tecla Control",
             nameof(ModifiersShift) => "Tecla Mayús",
+            nameof(StartWithWindows) => "Iniciar con Windows",
             nameof(Exit) => "Salir",
             _ => name,
         };
@@ -328,6 +345,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Touche Alt",
             nameof(ModifiersControl) => "Touche Ctrl",
             nameof(ModifiersShift) => "Touche Maj",
+            nameof(StartWithWindows) => "Démarrer avec Windows",
             nameof(Exit) => "Quitter",
             _ => name,
         };
@@ -342,6 +360,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Tasto Alt",
             nameof(ModifiersControl) => "Tasto Ctrl",
             nameof(ModifiersShift) => "Tasto Maiusc",
+            nameof(StartWithWindows) => "Avvia con Windows",
             nameof(Exit) => "Esci",
             _ => name,
         };
@@ -356,6 +375,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt-tasten",
             nameof(ModifiersControl) => "Ctrl-tasten",
             nameof(ModifiersShift) => "Shift-tasten",
+            nameof(StartWithWindows) => "Start med Windows",
             nameof(Exit) => "Avslutt",
             _ => name,
         };
@@ -370,6 +390,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt-toets",
             nameof(ModifiersControl) => "Ctrl-toets",
             nameof(ModifiersShift) => "Shift-toets",
+            nameof(StartWithWindows) => "Start met Windows",
             nameof(Exit) => "Afsluiten",
             _ => name,
         };
@@ -384,6 +405,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Klawisz Alt",
             nameof(ModifiersControl) => "Klawisz Ctrl",
             nameof(ModifiersShift) => "Klawisz Shift",
+            nameof(StartWithWindows) => "Uruchamiaj z systemem Windows",
             nameof(Exit) => "Wyjście",
             _ => name,
         };
@@ -398,6 +420,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Tecla Alt",
             nameof(ModifiersControl) => "Tecla Ctrl",
             nameof(ModifiersShift) => "Tecla Shift",
+            nameof(StartWithWindows) => "Iniciar com o Windows",
             nameof(Exit) => "Sair",
             _ => name,
         };
@@ -412,6 +435,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Tecla Alt",
             nameof(ModifiersControl) => "Tecla Ctrl",
             nameof(ModifiersShift) => "Tecla Shift",
+            nameof(StartWithWindows) => "Iniciar com o Windows",
             nameof(Exit) => "Sair",
             _ => name,
         };
@@ -426,6 +450,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Клавиша Alt",
             nameof(ModifiersControl) => "Клавиша Ctrl",
             nameof(ModifiersShift) => "Клавиша Shift",
+            nameof(StartWithWindows) => "Запускать вместе с Windows",
             nameof(Exit) => "Выход",
             _ => name,
         };
@@ -440,6 +465,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt Tuşu",
             nameof(ModifiersControl) => "Ctrl Tuşu",
             nameof(ModifiersShift) => "Shift Tuşu",
+            nameof(StartWithWindows) => "Windows ile başlat",
             nameof(Exit) => "Çıkış",
             _ => name,
         };
@@ -454,6 +480,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Клавіша Alt",
             nameof(ModifiersControl) => "Клавіша Ctrl",
             nameof(ModifiersShift) => "Клавіша Shift",
+            nameof(StartWithWindows) => "Запускати разом із Windows",
             nameof(Exit) => "Вихід",
             _ => name,
         };
@@ -468,6 +495,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Phím Alt",
             nameof(ModifiersControl) => "Phím Ctrl",
             nameof(ModifiersShift) => "Phím Shift",
+            nameof(StartWithWindows) => "Khởi động cùng Windows",
             nameof(Exit) => "Thoát",
             _ => name,
         };
@@ -482,6 +510,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt की",
             nameof(ModifiersControl) => "Control की",
             nameof(ModifiersShift) => "Shift की",
+            nameof(StartWithWindows) => "Windows सोबत सुरू करा",
             nameof(Exit) => "बाहेर पडा",
             _ => name,
         };
@@ -496,6 +525,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt कुंजी",
             nameof(ModifiersControl) => "Control कुंजी",
             nameof(ModifiersShift) => "Shift कुंजी",
+            nameof(StartWithWindows) => "Windows के साथ शुरू करें",
             nameof(Exit) => "बाहर निकलें",
             _ => name,
         };
@@ -510,6 +540,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "מקש Alt",
             nameof(ModifiersControl) => "מקש Ctrl",
             nameof(ModifiersShift) => "מקש Shift",
+            nameof(StartWithWindows) => "הפעל עם Windows",
             nameof(Exit) => "יציאה",
             _ => name,
         };
@@ -524,6 +555,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Πλήκτρο Alt",
             nameof(ModifiersControl) => "Πλήκτρο Ctrl",
             nameof(ModifiersShift) => "Πλήκτρο Shift",
+            nameof(StartWithWindows) => "Εκκίνηση με τα Windows",
             nameof(Exit) => "Έξοδος",
             _ => name,
         };
@@ -538,6 +570,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Alt-tangenten",
             nameof(ModifiersControl) => "Ctrl-tangenten",
             nameof(ModifiersShift) => "Shift-tangenten",
+            nameof(StartWithWindows) => "Starta med Windows",
             nameof(Exit) => "Avsluta",
             _ => name,
         };
@@ -552,6 +585,7 @@ internal static class Globalizations
             nameof(ModifiersAlt) => "Tasta Alt",
             nameof(ModifiersControl) => "Tasta Control",
             nameof(ModifiersShift) => "Tasta Shift",
+            nameof(StartWithWindows) => "Pornește odată cu Windows",
             nameof(Exit) => "Ieșire",
             _ => name,
         };
