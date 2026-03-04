@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER" />
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="SecondaryClickComponents">
+            <Component Id="cmpD19802B06115E097B82E6F79408558EF" Directory="INSTALLFOLDER" Guid="47BDE558-3271-4744-B666-39A0A7B73E60">
+                <File Id="fil978DECC154F6EDA86754D7F9EA76EAB4" KeyPath="yes" Source="$(var.PackageDir)\ClearRegistry.bat" />
+            </Component>
+            <Component Id="cmpFD4AAFCE6CF156B546A89AAB6C625E9E" Directory="INSTALLFOLDER" Guid="500C4481-D4F4-4C33-A9D4-FA1933D33C4B">
+                <File Id="fil5C0FC61BF17FC93AA827C79BE98103F9" KeyPath="yes" Source="$(var.PackageDir)\ExitProgram.bat" />
+            </Component>
+            <Component Id="cmpA33705521F2F2AEF738C77A6F1ECF3F2" Directory="INSTALLFOLDER" Guid="9A5B235D-CAEC-48E2-B781-ABD96716BB17">
+                <File Id="fil56DAD60E70E0A9998E514FC7477738DF" KeyPath="yes" Source="$(var.PackageDir)\RestoreTrayIcon.bat" />
+            </Component>
+            <Component Id="cmpEE7B57D3B03BA030B5B9FEF1EF3B0EE8" Directory="INSTALLFOLDER" Guid="BBCCC138-A74D-4F6F-AFA8-6C822D5DC4DE">
+                <File Id="fil1F73E7948DC0DAC391A5407778FA4FC5" KeyPath="yes" Source="$(var.PackageDir)\SecondaryClick.exe" />
+            </Component>
+            <Component Id="cmpC3307578820D1E602DBB8632C1B03CF2" Directory="INSTALLFOLDER" Guid="98D38F4E-774D-46C7-9058-37DF4CE56DE0">
+                <File Id="fil4D52B2CFB8EEFC2EC0FB781DD03C7A79" KeyPath="yes" Source="$(var.PackageDir)\SecondaryClick.exe.config" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>

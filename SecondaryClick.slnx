@@ -1,5 +1,13 @@
 <Solution>
   <Project Path="src/SecondaryClick/SecondaryClick.csproj" />
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="src/SecondaryClick.Installer/SecondaryClick.Installer.wixproj" Id="f0214fc2-efbe-426c-842d-b42bc37d9525">
+    <Platform Project="x86" />
+    <Build />
+  </Project>
   <Project Path="src/SecondaryClick.MouseKeyHook/SecondaryClick.MouseKeyHook.csproj" />
   <Project Path="src/SecondaryClick.WindowsInput/SecondaryClick.WindowsInput.csproj" />
 </Solution>
