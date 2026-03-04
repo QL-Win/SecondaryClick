@@ -66,54 +66,10 @@ internal static class PrecisionTouchpadRegistrySettings
     /// <returns>A nullable boolean, or null if the value is not found or not accessible.</returns>
     private static bool? ReadBoolValue(string valueName)
     {
-        int openResult = Advapi32.RegOpenKeyEx(
-            Advapi32.HKEY_CURRENT_USER,
-            KeyPath,
-            0,
-            Advapi32.KEY_QUERY_VALUE,
-            out IntPtr keyHandle);
-
-        if (openResult != Win32Error.ERROR_SUCCESS)
+        if (!RegistryApi.TryReadDwordCurrentUser(KeyPath, valueName, out int intValue))
             return null;
 
-        try
-        {
-            uint valueType;
-            uint dataSize = 0;
-
-            int queryResult = Advapi32.RegQueryValueEx(
-                keyHandle,
-                valueName,
-                0,
-                out valueType,
-                null,
-                ref dataSize);
-
-            if (queryResult != Win32Error.ERROR_SUCCESS)
-                return null;
-
-            if (valueType != Advapi32.REG_DWORD || dataSize < sizeof(int))
-                return null;
-
-            byte[] data = new byte[dataSize];
-            queryResult = Advapi32.RegQueryValueEx(
-                keyHandle,
-                valueName,
-                0,
-                out valueType,
-                data,
-                ref dataSize);
-
-            if (queryResult != Win32Error.ERROR_SUCCESS)
-                return null;
-
-            int intValue = BitConverter.ToInt32(data, 0);
-            return unchecked((uint)intValue) == 0xFFFFFFFF;
-        }
-        finally
-        {
-            _ = Advapi32.RegCloseKey(keyHandle);
-        }
+        return unchecked((uint)intValue) == 0xFFFFFFFF;
     }
 
     /// <summary>
@@ -124,37 +80,6 @@ internal static class PrecisionTouchpadRegistrySettings
     /// <returns>True if the operation succeeded, false otherwise.</returns>
     private static bool WriteBoolValue(string valueName, bool enabled)
     {
-        int createResult = Advapi32.RegCreateKeyEx(
-            Advapi32.HKEY_CURRENT_USER,
-            KeyPath,
-            0,
-            null,
-            0,
-            Advapi32.KEY_SET_VALUE,
-            IntPtr.Zero,
-            out IntPtr keyHandle,
-            out _);
-
-        if (createResult != Win32Error.ERROR_SUCCESS)
-            return false;
-
-        try
-        {
-            byte[] data = BitConverter.GetBytes(enabled ? unchecked((int)0xFFFFFFFF) : 0);
-
-            int setResult = Advapi32.RegSetValueEx(
-                keyHandle,
-                valueName,
-                0,
-                Advapi32.REG_DWORD,
-                data,
-                data.Length);
-
-            return setResult == Win32Error.ERROR_SUCCESS;
-        }
-        finally
-        {
-            _ = Advapi32.RegCloseKey(keyHandle);
-        }
+        return RegistryApi.SetDwordCurrentUser(KeyPath, valueName, enabled ? unchecked((int)0xFFFFFFFF) : 0);
     }
 }

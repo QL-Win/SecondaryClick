@@ -1,5 +1,4 @@
 ﻿using SecondaryClick.WinApi;
-using System.Text;
 
 namespace SecondaryClick;
 
@@ -63,7 +62,7 @@ internal sealed class ConfigurationDefinition<T>(string name, T defaultValue)
                 return (T)(object)stringValue;
             }
 
-            if (valueType == Advapi32.REG_DWORD && data.Length >= sizeof(int))
+            if (RegistryApi.IsDwordType(valueType) && data.Length >= sizeof(int))
             {
                 int intValue = BitConverter.ToInt32(data, 0);
                 return (T)Convert.ChangeType(intValue, typeof(T));
@@ -80,101 +79,25 @@ internal sealed class ConfigurationDefinition<T>(string name, T defaultValue)
 
     public void Set(T value)
     {
-        int createResult = Advapi32.RegCreateKeyEx(
-            Advapi32.HKEY_CURRENT_USER,
-            RegistryPath,
-            0,
-            null,
-            0,
-            Advapi32.KEY_SET_VALUE,
-            IntPtr.Zero,
-            out IntPtr keyHandle,
-            out _);
-
-        if (createResult != Win32Error.ERROR_SUCCESS)
+        if (typeof(T) == typeof(bool))
+        {
+            bool boolValue = (bool)(object)value!;
+            _ = RegistryApi.SetDwordCurrentUser(RegistryPath, _name, boolValue ? 1 : 0);
             return;
-
-        try
-        {
-            if (typeof(T) == typeof(bool))
-            {
-                bool boolValue = (bool)(object)value!;
-                byte[] data = BitConverter.GetBytes(boolValue ? 1 : 0);
-                _ = Advapi32.RegSetValueEx(
-                    keyHandle,
-                    _name,
-                    0,
-                    Advapi32.REG_DWORD,
-                    data,
-                    data.Length);
-                return;
-            }
-
-            string stringValue = value?.ToString() ?? string.Empty;
-            int dataSize = (stringValue.Length + 1) * sizeof(char);
-            _ = Advapi32.RegSetValueEx(
-                keyHandle,
-                _name,
-                0,
-                Advapi32.REG_SZ,
-                stringValue,
-                dataSize);
         }
-        finally
-        {
-            _ = Advapi32.RegCloseKey(keyHandle);
-        }
+
+        string stringValue = value?.ToString() ?? string.Empty;
+        _ = RegistryApi.SetStringCurrentUser(RegistryPath, _name, stringValue);
     }
 
     private bool TryReadRegistryValue(out uint valueType, out byte[] data)
     {
-        valueType = 0;
-        data = [];
-
-        int openResult = Advapi32.RegOpenKeyEx(
-            Advapi32.HKEY_CURRENT_USER,
-            RegistryPath,
-            0,
-            Advapi32.KEY_QUERY_VALUE,
-            out IntPtr keyHandle);
-
-        if (openResult != Win32Error.ERROR_SUCCESS)
-            return false;
-
-        try
-        {
-            uint dataSize = 0;
-            int queryResult = Advapi32.RegQueryValueEx(
-                keyHandle,
-                _name,
-                0,
-                out valueType,
-                null,
-                ref dataSize);
-
-            if (queryResult != Win32Error.ERROR_SUCCESS || dataSize == 0)
-                return false;
-
-            data = new byte[dataSize];
-            queryResult = Advapi32.RegQueryValueEx(
-                keyHandle,
-                _name,
-                0,
-                out valueType,
-                data,
-                ref dataSize);
-
-            return queryResult == Win32Error.ERROR_SUCCESS;
-        }
-        finally
-        {
-            _ = Advapi32.RegCloseKey(keyHandle);
-        }
+        return RegistryApi.TryReadRawCurrentUser(RegistryPath, _name, out valueType, out data);
     }
 
     private static bool ConvertToBool(uint valueType, byte[] data)
     {
-        if (valueType == Advapi32.REG_DWORD && data.Length >= sizeof(int))
+        if (RegistryApi.IsDwordType(valueType) && data.Length >= sizeof(int))
         {
             return BitConverter.ToInt32(data, 0) != 0;
         }
@@ -191,6 +114,6 @@ internal sealed class ConfigurationDefinition<T>(string name, T defaultValue)
 
     private static string DecodeString(byte[] data)
     {
-        return Encoding.Unicode.GetString(data).TrimEnd('\0');
+        return RegistryApi.DecodeUnicodeString(data);
     }
 }
