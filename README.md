@@ -1,3 +1,7 @@
+![logo64](https://raw.githubusercontent.com/QL-Win/SecondaryClick/refs/heads/master/branding/Logo.png)
+
+[![GitHub license](https://img.shields.io/github/license/QL-Win/SecondaryClick)](https://github.com/QL-Win/SecondaryClick/blob/master/LICENSE-GPL.txt) [![Actions](https://github.com/QL-Win/SecondaryClick/actions/workflows/SecondaryClick.yml/badge.svg)](https://github.com/QL-Win/SecondaryClick/actions/workflows/SecondaryClick.yml) [![Platform](https://img.shields.io/badge/platform-Windows-blue?logo=windowsxp&color=1E9BFA)](https://dotnet.microsoft.com/zh-cn/download/dotnet/latest/runtime)
+
 # SecondaryClick
 
 Bring macOS “Secondary Click” gesture to Windows.
