@@ -75,7 +75,7 @@ public partial class App : Application
             return true;
 
         // Second instance is detected - notify the user
-        MessageBox.Show("另一個 SecondaryClick 程式正在執行", "SecondaryClick",
+        MessageBox.Show(SH.AnotherInstanceRunning, "SecondaryClick",
             MessageBoxButton.OK, MessageBoxImage.Information);
 
         return false;
