@@ -171,3 +171,6 @@ UpgradeLog*.txt
 
 # Backup files when performing XAML Binding debugging
 *.backupid-*.BindingExpression
+
+# WiX toolset files
+C_SecondaryClickComponents.wxs
