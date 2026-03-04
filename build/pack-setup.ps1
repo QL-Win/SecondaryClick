@@ -17,8 +17,8 @@ $sevenZip = Join-Path $globalPackages "micasetup.tools\2.5.0\build\bin\7z.exe"
 $makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.0\build\makemica.exe"
 
 Set-Location $scriptRoot\..\
-dotnet restore
-dotnet build -c Release
+dotnet restore .\src\SecondaryClick\SecondaryClick.csproj
+dotnet build .\src\SecondaryClick\SecondaryClick.csproj -c Release --no-restore
 
 if (-not (Test-Path $sevenZip)) {
     throw "7z.exe file not found: $sevenZip"
