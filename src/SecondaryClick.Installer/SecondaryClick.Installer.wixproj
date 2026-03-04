@@ -11,7 +11,7 @@
     <OutputPath>..\..\build\</OutputPath>
     <LangVersion>latest</LangVersion>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <PackageDir>$(MSBuildThisFileDirectory)..\SecondaryClick\bin\$(Configuration)\net48</PackageDir>
+    <PackageDir>$(MSBuildThisFileDirectory)..\..\build\$(Configuration)</PackageDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DefineConstants>Debug;PackageDir=$(PackageDir)</DefineConstants>
