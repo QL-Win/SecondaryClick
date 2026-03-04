@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+﻿using SecondaryClick.WinApi;
 
 namespace SecondaryClick.Gestures.Touchpads;
 
@@ -66,19 +66,54 @@ internal static class PrecisionTouchpadRegistrySettings
     /// <returns>A nullable boolean, or null if the value is not found or not accessible.</returns>
     private static bool? ReadBoolValue(string valueName)
     {
-        using RegistryKey? key = Registry.CurrentUser.OpenSubKey(KeyPath, writable: false);
-        if (key == null)
+        int openResult = Advapi32.RegOpenKeyEx(
+            Advapi32.HKEY_CURRENT_USER,
+            KeyPath,
+            0,
+            Advapi32.KEY_QUERY_VALUE,
+            out IntPtr keyHandle);
+
+        if (openResult != Win32Error.ERROR_SUCCESS)
             return null;
 
-        object? value = key.GetValue(valueName);
-        if (value == null)
-            return null;
+        try
+        {
+            uint valueType;
+            uint dataSize = 0;
 
-        // Windows uses REG_DWORD where 0xFFFFFFFF = true, 0 = false
-        if (value is int intValue)
-            return (uint)intValue == 0xFFFFFFFF;
+            int queryResult = Advapi32.RegQueryValueEx(
+                keyHandle,
+                valueName,
+                0,
+                out valueType,
+                null,
+                ref dataSize);
 
-        return null;
+            if (queryResult != Win32Error.ERROR_SUCCESS)
+                return null;
+
+            if (valueType != Advapi32.REG_DWORD || dataSize < sizeof(int))
+                return null;
+
+            byte[] data = new byte[dataSize];
+            queryResult = Advapi32.RegQueryValueEx(
+                keyHandle,
+                valueName,
+                0,
+                out valueType,
+                data,
+                ref dataSize);
+
+            if (queryResult != Win32Error.ERROR_SUCCESS)
+                return null;
+
+            int intValue = BitConverter.ToInt32(data, 0);
+            return unchecked((uint)intValue) == 0xFFFFFFFF;
+        }
+        finally
+        {
+            _ = Advapi32.RegCloseKey(keyHandle);
+        }
     }
 
     /// <summary>
@@ -89,22 +124,37 @@ internal static class PrecisionTouchpadRegistrySettings
     /// <returns>True if the operation succeeded, false otherwise.</returns>
     private static bool WriteBoolValue(string valueName, bool enabled)
     {
+        int createResult = Advapi32.RegCreateKeyEx(
+            Advapi32.HKEY_CURRENT_USER,
+            KeyPath,
+            0,
+            null,
+            0,
+            Advapi32.KEY_SET_VALUE,
+            IntPtr.Zero,
+            out IntPtr keyHandle,
+            out _);
+
+        if (createResult != Win32Error.ERROR_SUCCESS)
+            return false;
+
         try
         {
-            using RegistryKey? key = Registry.CurrentUser.CreateSubKey(KeyPath);
-            if (key == null)
-                return false;
+            byte[] data = BitConverter.GetBytes(enabled ? unchecked((int)0xFFFFFFFF) : 0);
 
-            key.SetValue(
+            int setResult = Advapi32.RegSetValueEx(
+                keyHandle,
                 valueName,
-                enabled ? unchecked((int)0xFFFFFFFF) : 0,
-                RegistryValueKind.DWord);
+                0,
+                Advapi32.REG_DWORD,
+                data,
+                data.Length);
 
-            return true;
+            return setResult == Win32Error.ERROR_SUCCESS;
         }
-        catch
+        finally
         {
-            return false;
+            _ = Advapi32.RegCloseKey(keyHandle);
         }
     }
 }

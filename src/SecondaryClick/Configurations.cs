@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using SecondaryClick.WinApi;
+using System.Text;
 
 namespace SecondaryClick;
 
@@ -37,8 +38,7 @@ internal sealed class ConfigurationDefinition<T>(string name, T defaultValue)
 
     public T Get()
     {
-        using RegistryKey? key = Registry.CurrentUser.OpenSubKey(RegistryPath, writable: false);
-        if (key?.GetValue(_name) is not object value)
+        if (!TryReadRegistryValue(out uint valueType, out byte[] data))
         {
             return _defaultValue;
         }
@@ -47,24 +47,25 @@ internal sealed class ConfigurationDefinition<T>(string name, T defaultValue)
         {
             if (typeof(T) == typeof(bool))
             {
-                bool converted = value switch
-                {
-                    int intValue => intValue != 0,
-                    long longValue => longValue != 0,
-                    string stringValue when bool.TryParse(stringValue, out bool parsedBool) => parsedBool,
-                    string stringValue when int.TryParse(stringValue, out int parsedInt) => parsedInt != 0,
-                    _ => Convert.ToInt32(value) != 0,
-                };
+                bool converted = ConvertToBool(valueType, data);
 
                 return (T)(object)converted;
             }
 
-            if (value is T typedValue)
+            if (typeof(T) == typeof(string))
             {
-                return typedValue;
+                string stringValue = DecodeString(data);
+                return (T)(object)stringValue;
             }
 
-            return (T)Convert.ChangeType(value, typeof(T));
+            if (valueType == Advapi32.REG_DWORD && data.Length >= sizeof(int))
+            {
+                int intValue = BitConverter.ToInt32(data, 0);
+                return (T)Convert.ChangeType(intValue, typeof(T));
+            }
+
+            string valueAsString = DecodeString(data);
+            return (T)Convert.ChangeType(valueAsString, typeof(T));
         }
         catch
         {
@@ -74,15 +75,117 @@ internal sealed class ConfigurationDefinition<T>(string name, T defaultValue)
 
     public void Set(T value)
     {
-        using RegistryKey key = Registry.CurrentUser.CreateSubKey(RegistryPath);
+        int createResult = Advapi32.RegCreateKeyEx(
+            Advapi32.HKEY_CURRENT_USER,
+            RegistryPath,
+            0,
+            null,
+            0,
+            Advapi32.KEY_SET_VALUE,
+            IntPtr.Zero,
+            out IntPtr keyHandle,
+            out _);
 
-        if (typeof(T) == typeof(bool))
-        {
-            bool boolValue = (bool)(object)value!;
-            key.SetValue(_name, boolValue ? 1 : 0, RegistryValueKind.DWord);
+        if (createResult != Win32Error.ERROR_SUCCESS)
             return;
+
+        try
+        {
+            if (typeof(T) == typeof(bool))
+            {
+                bool boolValue = (bool)(object)value!;
+                byte[] data = BitConverter.GetBytes(boolValue ? 1 : 0);
+                _ = Advapi32.RegSetValueEx(
+                    keyHandle,
+                    _name,
+                    0,
+                    Advapi32.REG_DWORD,
+                    data,
+                    data.Length);
+                return;
+            }
+
+            string stringValue = value?.ToString() ?? string.Empty;
+            int dataSize = (stringValue.Length + 1) * sizeof(char);
+            _ = Advapi32.RegSetValueEx(
+                keyHandle,
+                _name,
+                0,
+                Advapi32.REG_SZ,
+                stringValue,
+                dataSize);
+        }
+        finally
+        {
+            _ = Advapi32.RegCloseKey(keyHandle);
+        }
+    }
+
+    private bool TryReadRegistryValue(out uint valueType, out byte[] data)
+    {
+        valueType = 0;
+        data = [];
+
+        int openResult = Advapi32.RegOpenKeyEx(
+            Advapi32.HKEY_CURRENT_USER,
+            RegistryPath,
+            0,
+            Advapi32.KEY_QUERY_VALUE,
+            out IntPtr keyHandle);
+
+        if (openResult != Win32Error.ERROR_SUCCESS)
+            return false;
+
+        try
+        {
+            uint dataSize = 0;
+            int queryResult = Advapi32.RegQueryValueEx(
+                keyHandle,
+                _name,
+                0,
+                out valueType,
+                null,
+                ref dataSize);
+
+            if (queryResult != Win32Error.ERROR_SUCCESS || dataSize == 0)
+                return false;
+
+            data = new byte[dataSize];
+            queryResult = Advapi32.RegQueryValueEx(
+                keyHandle,
+                _name,
+                0,
+                out valueType,
+                data,
+                ref dataSize);
+
+            return queryResult == Win32Error.ERROR_SUCCESS;
+        }
+        finally
+        {
+            _ = Advapi32.RegCloseKey(keyHandle);
+        }
+    }
+
+    private static bool ConvertToBool(uint valueType, byte[] data)
+    {
+        if (valueType == Advapi32.REG_DWORD && data.Length >= sizeof(int))
+        {
+            return BitConverter.ToInt32(data, 0) != 0;
         }
 
-        key.SetValue(_name, value?.ToString() ?? string.Empty, RegistryValueKind.String);
+        string text = DecodeString(data);
+        if (bool.TryParse(text, out bool parsedBool))
+            return parsedBool;
+
+        if (int.TryParse(text, out int parsedInt))
+            return parsedInt != 0;
+
+        return false;
+    }
+
+    private static string DecodeString(byte[] data)
+    {
+        return Encoding.Unicode.GetString(data).TrimEnd('\0');
     }
 }

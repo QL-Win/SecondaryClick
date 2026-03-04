@@ -14,6 +14,8 @@ internal static class Advapi32
 
     public const uint REG_SZ = 1;
     public const uint REG_EXPAND_SZ = 2;
+    public const uint REG_DWORD = 4;
+    public const uint REG_QWORD = 11;
 
     [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     public static extern int RegOpenKeyEx(
@@ -42,6 +44,15 @@ internal static class Advapi32
         int Reserved,
         uint dwType,
         string lpData,
+        int cbData);
+
+    [DllImport("advapi32.dll", SetLastError = true)]
+    public static extern int RegSetValueEx(
+        IntPtr hKey,
+        string lpValueName,
+        int Reserved,
+        uint dwType,
+        byte[] lpData,
         int cbData);
 
     [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
