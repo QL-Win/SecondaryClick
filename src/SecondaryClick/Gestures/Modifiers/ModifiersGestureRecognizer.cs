@@ -141,7 +141,7 @@ public sealed class ModifiersGestureRecognizer : IGestureRecognizer
         if (!_enabled || _suppressInjected)
             return;
 
-        var pressedModifiers = GetPressedActivationModifiers();
+        GestureModifiers pressedModifiers = GetPressedActivationModifiers();
         if (pressedModifiers == GestureModifiers.None)
             return;
 
@@ -246,7 +246,7 @@ public sealed class ModifiersGestureRecognizer : IGestureRecognizer
     /// <returns>A combination of flags representing the pressed modifiers.</returns>
     private GestureModifiers GetPressedActivationModifiers()
     {
-        var modifiers = GestureModifiers.None;
+        GestureModifiers modifiers = GestureModifiers.None;
 
         if (_activationModifiers.HasFlag(GestureModifiers.Alt) && IsAltPressed())
         {
@@ -331,7 +331,7 @@ public sealed class ModifiersGestureRecognizer : IGestureRecognizer
     private void InjectAltKeyUp(Keys keyCode)
     {
         // Replay the suppressed Alt key-up so Windows clears the modifier state.
-        var vk = keyCode switch
+        User32.VK vk = keyCode switch
         {
             Keys.LMenu => User32.VK.VK_LMENU,
             Keys.RMenu => User32.VK.VK_RMENU,

@@ -33,7 +33,7 @@ internal static class RegistryApi
             subKeyPath,
             0,
             Advapi32.KEY_QUERY_VALUE,
-            out IntPtr keyHandle);
+            out nint keyHandle);
 
         if (openResult != Win32Error.ERROR_SUCCESS)
             return false;
@@ -131,8 +131,8 @@ internal static class RegistryApi
             null,
             0,
             Advapi32.KEY_SET_VALUE,
-            IntPtr.Zero,
-            out IntPtr keyHandle,
+            0,
+            out nint keyHandle,
             out _);
 
         if (createResult != Win32Error.ERROR_SUCCESS)
@@ -173,8 +173,8 @@ internal static class RegistryApi
             null,
             0,
             Advapi32.KEY_SET_VALUE,
-            IntPtr.Zero,
-            out IntPtr keyHandle,
+            0,
+            out nint keyHandle,
             out _);
 
         if (createResult != Win32Error.ERROR_SUCCESS)
@@ -212,7 +212,7 @@ internal static class RegistryApi
             subKeyPath,
             0,
             Advapi32.KEY_SET_VALUE,
-            out IntPtr keyHandle);
+            out nint keyHandle);
 
         if (openResult == Win32Error.ERROR_FILE_NOT_FOUND)
             return true;

@@ -10,7 +10,7 @@ internal static class Advapi32
     /// <summary>
     /// Predefined handle to the HKEY_CURRENT_USER root key.
     /// </summary>
-    public static readonly UIntPtr HKEY_CURRENT_USER = (UIntPtr)0x80000001u;
+    public static readonly nuint HKEY_CURRENT_USER = 0x80000001u;
 
     /// <summary>
     /// Access right for querying key value data.
@@ -53,11 +53,11 @@ internal static class Advapi32
     /// <returns>Win32 error code. ERROR_SUCCESS indicates success.</returns>
     [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     public static extern int RegOpenKeyEx(
-        UIntPtr hKey,
+        nuint hKey,
         string lpSubKey,
         int ulOptions,
         int samDesired,
-        out IntPtr phkResult);
+        out nint phkResult);
 
     /// <summary>
     /// Creates or opens the specified registry key.
@@ -68,20 +68,20 @@ internal static class Advapi32
     /// <param name="lpClass">The user-defined class type for this key. Typically null.</param>
     /// <param name="dwOptions">Special options for key creation. Typically zero.</param>
     /// <param name="samDesired">The access rights requested for the key.</param>
-    /// <param name="lpSecurityAttributes">Security descriptor pointer. Typically IntPtr.Zero.</param>
+    /// <param name="lpSecurityAttributes">Security descriptor pointer. Typically 0.</param>
     /// <param name="phkResult">When successful, receives a handle to the opened or created key.</param>
     /// <param name="lpdwDisposition">Receives status indicating whether key was created or opened.</param>
     /// <returns>Win32 error code. ERROR_SUCCESS indicates success.</returns>
     [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     public static extern int RegCreateKeyEx(
-        UIntPtr hKey,
+        nuint hKey,
         string lpSubKey,
         int Reserved,
         string? lpClass,
         uint dwOptions,
         int samDesired,
-        IntPtr lpSecurityAttributes,
-        out IntPtr phkResult,
+        nint lpSecurityAttributes,
+        out nint phkResult,
         out uint lpdwDisposition);
 
     /// <summary>
@@ -96,7 +96,7 @@ internal static class Advapi32
     /// <returns>Win32 error code. ERROR_SUCCESS indicates success.</returns>
     [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     public static extern int RegSetValueEx(
-        IntPtr hKey,
+        nint hKey,
         string lpValueName,
         int Reserved,
         uint dwType,
@@ -115,7 +115,7 @@ internal static class Advapi32
     /// <returns>Win32 error code. ERROR_SUCCESS indicates success.</returns>
     [DllImport("advapi32.dll", SetLastError = true)]
     public static extern int RegSetValueEx(
-        IntPtr hKey,
+        nint hKey,
         string lpValueName,
         int Reserved,
         uint dwType,
@@ -134,7 +134,7 @@ internal static class Advapi32
     /// <returns>Win32 error code. ERROR_SUCCESS indicates success.</returns>
     [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     public static extern int RegQueryValueEx(
-        IntPtr hKey,
+        nint hKey,
         string lpValueName,
         int lpReserved,
         out uint lpType,
@@ -149,7 +149,7 @@ internal static class Advapi32
     /// <returns>Win32 error code. ERROR_SUCCESS indicates success.</returns>
     [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     public static extern int RegDeleteValue(
-        IntPtr hKey,
+        nint hKey,
         string lpValueName);
 
     /// <summary>
@@ -158,5 +158,5 @@ internal static class Advapi32
     /// <param name="hKey">A handle to an open registry key.</param>
     /// <returns>Win32 error code. ERROR_SUCCESS indicates success.</returns>
     [DllImport("advapi32.dll", SetLastError = true)]
-    public static extern int RegCloseKey(IntPtr hKey);
+    public static extern int RegCloseKey(nint hKey);
 }

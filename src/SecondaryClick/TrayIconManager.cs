@@ -332,7 +332,7 @@ internal sealed partial class TrayIconManager : IDisposable
         Action? clickEvent = null,
         Action? closeEvent = null)
     {
-        var icon = GetInstance()._icon;
+        TrayIconHost icon = GetInstance()._icon;
         icon.ShowBalloonTip(timeout, title, content, isError ? TrayToolTipIcon.Error : TrayToolTipIcon.Info);
         icon.BalloonTipClicked += OnIconOnBalloonTipClicked;
         icon.BalloonTipClosed += OnIconOnBalloonTipClosed;

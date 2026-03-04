@@ -32,7 +32,7 @@ internal class PrecisionTouchpadSPISettings
     /// <returns>True if the operation succeeded, false otherwise.</returns>
     public static bool SetTwoFingerTapRightClickEnabled(bool enabled)
     {
-        if (!TryGetParameters(out var p))
+        if (!TryGetParameters(out TOUCHPAD_PARAMETERS_V1 p))
             return false;
 
         p.TwoFingerTapEnabled = enabled;
@@ -46,7 +46,7 @@ internal class PrecisionTouchpadSPISettings
     /// <returns>True if the operation succeeded, false otherwise.</returns>
     public static bool SetRightClickZoneEnabled(bool enabled)
     {
-        if (!TryGetParameters(out var p))
+        if (!TryGetParameters(out TOUCHPAD_PARAMETERS_V1 p))
             return false;
 
         p.RightClickZoneEnabled = enabled;
