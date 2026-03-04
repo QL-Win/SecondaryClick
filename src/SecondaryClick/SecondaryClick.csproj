@@ -18,8 +18,11 @@
   <ItemGroup>
     <None Remove="*.ico" />
     <Resource Include="*.ico" />
-    <Resource Remove="LogoDark.ico" />
+    <Resource Remove="*Dark.ico" />
     <None Include="RestoreTrayIcon.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ExitSecondaryClick.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
