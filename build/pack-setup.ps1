@@ -10,16 +10,52 @@
 Write-Host ("Build started {0:yyyy.MM.dd HH:mm:ss}" -f (Get-Date))
 
 $scriptRoot = $PSScriptRoot
+$repoRoot = [System.IO.Path]::GetFullPath((Join-Path $scriptRoot ".."))
 $version = git describe --always --tags --exclude latest
 $globalPackages = (dotnet nuget locals global-packages --list) -split ":\s*", 2 | Select-Object -Last 1
 
 $sevenZip = Join-Path $globalPackages "micasetup.tools\2.5.0\build\bin\7z.exe"
 $makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.0\build\makemica.exe"
 
-Set-Location $scriptRoot\..\
-dotnet restore .\src\SecondaryClick\SecondaryClick.csproj
-dotnet build .\src\SecondaryClick\SecondaryClick.csproj -c Release --no-restore
+# Installer build settings
+$appProject = Join-Path $repoRoot "src\SecondaryClick\SecondaryClick.csproj"
+$installerProject = Join-Path $repoRoot "src\SecondaryClick.Installer\SecondaryClick.Installer.wixproj"
 
+Set-Location $repoRoot
+
+# Build app output (used by both installer heat harvest and portable package)
+# Restore with Release configuration so conditional PackageReference entries (for example Costura.Fody) are included.
+dotnet restore $appProject -p:Configuration=Release
+dotnet build $appProject -c Release --no-restore
+
+# Build MSI installer
+$vsWhereCmd = Get-Command vswhere.exe -ErrorAction SilentlyContinue
+if (-not $vsWhereCmd) {
+    throw "vswhere.exe not found in PATH. Please install Visual Studio/Build Tools and ensure vswhere is available."
+}
+
+$msbuildExe = & $vsWhereCmd.Source -latest -products * -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe" | Select-Object -First 1
+if ([string]::IsNullOrWhiteSpace($msbuildExe) -or (-not (Test-Path $msbuildExe))) {
+    throw "MSBuild.exe not found via vswhere. Please install Visual Studio Build Tools with MSBuild component."
+}
+
+if ([string]::IsNullOrWhiteSpace($env:WIX)) {
+    throw "WIX environment variable is not set. This project's PreBuildEvent uses $(WIX)bin\heat."
+}
+
+& $msbuildExe $installerProject /t:Build /p:Configuration=Release /p:Platform=x86 /nologo
+if ($LASTEXITCODE -ne 0) {
+    throw "Installer build failed: $installerProject"
+}
+
+# Rename MSI to include git version
+$msiPath = Join-Path $scriptRoot "SecondaryClick.msi"
+if (Test-Path $msiPath) {
+    Remove-Item "$scriptRoot\SecondaryClick-$version.msi" -ErrorAction SilentlyContinue
+    Rename-Item $msiPath "SecondaryClick-$version.msi"
+}
+
+# Build ZIP and 7Zip packages
 if (-not (Test-Path $sevenZip)) {
     throw "7z.exe file not found: $sevenZip"
 }
@@ -36,6 +72,8 @@ if (-not (Test-Path $releaseDir)) {
 
 Remove-Item .\Package.7z -ErrorAction SilentlyContinue
 & $sevenZip a Package.7z "$releaseDir\*" -t7z -mx=9 -ms=on -m0=lzma2 -mf=BCJ2 -r -y
+
+# Build EXE installer by MicaSetup
 & $makemicaPath micasetup.json
 
 Compress-Archive "$releaseDir\*" SecondaryClick-$version.zip
