@@ -5,6 +5,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="src/SecondaryClick.Installer/SecondaryClick.Installer.wixproj" Id="f0214fc2-efbe-426c-842d-b42bc37d9525">
+    <BuildDependency Project="src/SecondaryClick/SecondaryClick.csproj" />
     <Platform Project="x86" />
     <Build />
   </Project>
