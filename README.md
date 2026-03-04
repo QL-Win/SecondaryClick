@@ -7,8 +7,8 @@ Right-click without a right button.
 ## Features
 
 - [x] Secondary click
-- [ ] Click with two fingers
-- [ ] Click and hold with one finger
+- [x] Click with two fingers
+- [x] Click and hold with one finger
 
 ## Licenses
 
