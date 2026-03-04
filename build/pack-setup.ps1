@@ -28,11 +28,17 @@ if (-not (Test-Path $makemicaPath)) {
 }
 
 Set-Location $scriptRoot
+$releaseDir = Join-Path $scriptRoot "Release"
+
+if (-not (Test-Path $releaseDir)) {
+    throw "Release output folder not found: $releaseDir"
+}
+
 Remove-Item .\Package.7z -ErrorAction SilentlyContinue
-& $sevenZip a Package.7z $scriptRoot\..\src\SecondaryClick\bin\Release\net48\* -t7z -mx=9 -ms=on -m0=lzma2 -mf=BCJ2 -r -y
+& $sevenZip a Package.7z "$releaseDir\*" -t7z -mx=9 -ms=on -m0=lzma2 -mf=BCJ2 -r -y
 & $makemicaPath micasetup.json
 
-Compress-Archive $scriptRoot\..\src\SecondaryClick\bin\Release\net48\* SecondaryClick-$version.zip
+Compress-Archive "$releaseDir\*" SecondaryClick-$version.zip
 Rename-Item .\SecondaryClick.exe SecondaryClick-$version.exe
 Rename-Item .\Package.7z SecondaryClick-$version.7z
 
