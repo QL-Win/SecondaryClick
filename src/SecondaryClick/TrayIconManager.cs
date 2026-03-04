@@ -6,6 +6,7 @@ using System.Drawing;
 using System.NativeTray;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace SecondaryClick;
 
@@ -31,12 +32,23 @@ internal sealed partial class TrayIconManager : IDisposable
     private readonly RecognizerHolder _recognizerHolder;
 
     /// <summary>
+    /// Watches registry-backed tray icon visibility configuration changes.
+    /// </summary>
+    private readonly DispatcherTimer _trayIconVisibilityWatcher;
+
+    /// <summary>
+    /// Last applied hidden-state of the tray icon.
+    /// </summary>
+    private bool _isTrayIconHidden;
+
+    /// <summary>
     /// Initializes a new instance of the TrayIconManager class (private constructor for singleton pattern).
     /// Sets up gesture recognizers and initializes the tray icon menu with all available options.
     /// </summary>
     private TrayIconManager()
     {
         _recognizerHolder = new();
+        _isTrayIconHidden = Configurations.HideTrayIcon.Get();
 
         if (Configurations.ModifiersAlt.Get())
         {
@@ -181,6 +193,18 @@ internal sealed partial class TrayIconManager : IDisposable
                 new TraySeparator(),
                 new TrayMenuItem
                 {
+                    Tag = nameof(SH.HideTrayIcon),
+                    Header = SH.HideTrayIcon,
+                    IsChecked = Configurations.HideTrayIcon.Get(),
+                    Command = static _ =>
+                    {
+                        bool nextState = !Configurations.HideTrayIcon.Get();
+                        Configurations.HideTrayIcon.Set(nextState);
+                        GetInstance().ApplyTrayIconVisibilityFromConfiguration();
+                    },
+                },
+                new TrayMenuItem
+                {
                     Tag = nameof(SH.StartWithWindows),
                     Header = SH.StartWithWindows,
                     IsChecked = StartupRegistrySettings.IsEnabled(),
@@ -228,9 +252,37 @@ internal sealed partial class TrayIconManager : IDisposable
             FindMenuItemByTag(_icon.Menu, nameof(SH.ModifiersShift))?.IsChecked =
                 Configurations.ModifiersShift.Get();
 
+            FindMenuItemByTag(_icon.Menu, nameof(SH.HideTrayIcon))?.IsChecked =
+                Configurations.HideTrayIcon.Get();
+
             FindMenuItemByTag(_icon.Menu, nameof(SH.StartWithWindows))?.IsChecked =
                 StartupRegistrySettings.IsEnabled();
         };
+
+        _icon.IsVisible = !_isTrayIconHidden;
+
+        _trayIconVisibilityWatcher = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1),
+        };
+        _trayIconVisibilityWatcher.Tick += OnTrayIconVisibilityWatcherTick;
+        _trayIconVisibilityWatcher.Start();
+    }
+
+    private void ApplyTrayIconVisibilityFromConfiguration()
+    {
+        _isTrayIconHidden = Configurations.HideTrayIcon.Get();
+        _icon.IsVisible = !_isTrayIconHidden;
+    }
+
+    private void OnTrayIconVisibilityWatcherTick(object? sender, EventArgs e)
+    {
+        bool isHiddenInRegistry = Configurations.HideTrayIcon.Get();
+        if (isHiddenInRegistry == _isTrayIconHidden)
+            return;
+
+        _isTrayIconHidden = isHiddenInRegistry;
+        _icon.IsVisible = !_isTrayIconHidden;
     }
 
     private static TrayMenuItem? FindMenuItemByTag(TrayMenu? menu, string tag)
@@ -261,6 +313,8 @@ internal sealed partial class TrayIconManager : IDisposable
     /// </summary>
     public void Dispose()
     {
+        _trayIconVisibilityWatcher.Stop();
+        _trayIconVisibilityWatcher.Tick -= OnTrayIconVisibilityWatcherTick;
         _recognizerHolder.Dispose();
         _icon.IsVisible = false;
     }

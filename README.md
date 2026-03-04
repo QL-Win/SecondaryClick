@@ -40,6 +40,9 @@ After launch, SecondaryClick runs in the system tray.
 	- Control Key
 	- Shift Key
 - Optional: enable Start with Windows from tray menu
+- Optional: hide tray icon from tray menu (`Hide tray icon`)
+
+If tray icon is hidden, run `RestoreTrayIcon.bat` from the app output folder to restore it.
 
 Settings are saved per user and restored automatically on next launch.
 

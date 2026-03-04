@@ -23,6 +23,11 @@ internal static class Configurations
     /// Configuration for Control key modifier activation. Defaults to true.
     /// </summary>
     public static ConfigurationDefinition<bool> ModifiersControl { get; } = new(nameof(ModifiersControl), true);
+
+    /// <summary>
+    /// Configuration for tray icon visibility. True means tray icon is hidden.
+    /// </summary>
+    public static ConfigurationDefinition<bool> HideTrayIcon { get; } = new(nameof(HideTrayIcon), false);
 }
 
 /// <summary>
