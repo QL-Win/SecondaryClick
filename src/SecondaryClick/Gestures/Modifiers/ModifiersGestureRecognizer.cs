@@ -10,42 +10,42 @@ namespace SecondaryClick.Gestures.Modifiers;
 /// Allows users to trigger a right-click by holding modifier keys (Alt, Ctrl, Shift) and clicking the left mouse button.
 /// Uses a low-level mouse/keyboard hook to intercept and process user input.
 /// </summary>
-public sealed class ModifiersGestureRecognizer : IGestureRecognizer
+public sealed partial class ModifiersGestureRecognizer : IGestureRecognizer
 {
     /// <summary>
     /// Simulates keyboard and mouse input events.
     /// </summary>
     private readonly InputSimulator _simulator = new();
-    
+
     /// <summary>
     /// Low-level keyboard and mouse hook for global input capture.
     /// </summary>
     private IKeyboardMouseEvents? _hook;
-    
+
     /// <summary>
     /// Flag indicating whether a right mouse button down event has been injected by this recognizer.
     /// </summary>
     private bool _rightDownInjected;
-    
+
     /// <summary>
     /// Flag to prevent re-entrant input processing of injected events.
     /// </summary>
     private bool _suppressInjected;
-    
+
     /// <summary>
     /// Flag indicating whether this recognizer is currently enabled.
     /// </summary>
     private bool _enabled;
-    
+
     /// <summary>
     /// Flag indicating whether the Alt key should be suppressed from appearing as a key event.
     /// </summary>
     private bool _suppressAltKey;
-    
+
     /// <summary>
-    /// The modifier keys that must be held to activate the gesture (default: Alt).
+    /// The modifier keys that must be held to activate the gesture (default: Control).
     /// </summary>
-    private GestureModifiers _activationModifiers = GestureModifiers.Alt;
+    private GestureModifiers _activationModifiers = GestureModifiers.Control;
 
     /// <summary>
     /// Gets or sets the modifier keys that must be held to activate the secondary click gesture.

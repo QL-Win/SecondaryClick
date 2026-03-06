@@ -49,27 +49,7 @@ internal sealed partial class TrayIconManager : IDisposable
     {
         _recognizerHolder = new();
         _isTrayIconHidden = Configurations.HideTrayIcon.Get();
-
-        if (Configurations.ModifiersAlt.Get())
-        {
-            _recognizerHolder.ModifiersRecognizer.ActivationModifiers
-                |= Gestures.Modifiers.GestureModifiers.Alt;
-        }
-        if (Configurations.ModifiersControl.Get())
-        {
-            _recognizerHolder.ModifiersRecognizer.ActivationModifiers
-                |= Gestures.Modifiers.GestureModifiers.Control;
-        }
-        if (Configurations.ModifiersShift.Get())
-        {
-            _recognizerHolder.ModifiersRecognizer.ActivationModifiers
-                |= Gestures.Modifiers.GestureModifiers.Shift;
-        }
-        _recognizerHolder.ModifiersRecognizer.SetEnabled(
-            Configurations.ModifiersAlt.Get()
-                | Configurations.ModifiersControl.Get()
-                | Configurations.ModifiersShift.Get()
-        );
+        ApplyModifierConfiguration();
 
         _icon = new TrayIconHost
         {
@@ -142,50 +122,40 @@ internal sealed partial class TrayIconManager : IDisposable
                                 Configurations.ModifiersAlt.Set(false);
                                 Configurations.ModifiersControl.Set(false);
                                 Configurations.ModifiersShift.Set(false);
-
-                                GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(false);
+                                GetInstance().ApplyModifierConfiguration();
                             },
                         },
                         new TrayMenuItem
                         {
                             Tag = nameof(SH.ModifiersAlt),
                             Header = SH.ModifiersAlt,
-                            IsChecked = true,
+                            IsChecked = Configurations.ModifiersAlt.Get(),
                             Command = static _ =>
                             {
                                 Configurations.ModifiersAlt.Set(!Configurations.ModifiersAlt.Get());
-
-                                GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
-                                    |= Gestures.Modifiers.GestureModifiers.Alt;
-                                GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(true);
+                                GetInstance().ApplyModifierConfiguration();
                             },
                         },
                         new TrayMenuItem
                         {
                             Tag = nameof(SH.ModifiersControl),
                             Header = SH.ModifiersControl,
-                            IsChecked = false,
+                            IsChecked = Configurations.ModifiersControl.Get(),
                             Command = static _ =>
                             {
                                 Configurations.ModifiersControl.Set(!Configurations.ModifiersControl.Get());
-
-                                GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
-                                    |= Gestures.Modifiers.GestureModifiers.Control;
-                                GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(true);
+                                GetInstance().ApplyModifierConfiguration();
                             },
                         },
                         new TrayMenuItem
                         {
                             Tag = nameof(SH.ModifiersShift),
                             Header = SH.ModifiersShift,
-                            IsChecked = false,
+                            IsChecked = Configurations.ModifiersShift.Get(),
                             Command = static _ =>
                             {
                                 Configurations.ModifiersShift.Set(!Configurations.ModifiersShift.Get());
-
-                                GetInstance()._recognizerHolder.ModifiersRecognizer.ActivationModifiers
-                                    |= Gestures.Modifiers.GestureModifiers.Shift;
-                                GetInstance()._recognizerHolder.ModifiersRecognizer.SetEnabled(true);
+                                GetInstance().ApplyModifierConfiguration();
                             },
                         },
                     ]
@@ -273,6 +243,31 @@ internal sealed partial class TrayIconManager : IDisposable
     {
         _isTrayIconHidden = Configurations.HideTrayIcon.Get();
         _icon.IsVisible = !_isTrayIconHidden;
+    }
+
+    private void ApplyModifierConfiguration()
+    {
+        Gestures.Modifiers.GestureModifiers activationModifiers = Gestures.Modifiers.GestureModifiers.None;
+
+        if (Configurations.ModifiersAlt.Get())
+        {
+            activationModifiers |= Gestures.Modifiers.GestureModifiers.Alt;
+        }
+
+        if (Configurations.ModifiersControl.Get())
+        {
+            activationModifiers |= Gestures.Modifiers.GestureModifiers.Control;
+        }
+
+        if (Configurations.ModifiersShift.Get())
+        {
+            activationModifiers |= Gestures.Modifiers.GestureModifiers.Shift;
+        }
+
+        _recognizerHolder.ModifiersRecognizer.ActivationModifiers = activationModifiers;
+        _recognizerHolder.ModifiersRecognizer.SetEnabled(
+            activationModifiers != Gestures.Modifiers.GestureModifiers.None
+        );
     }
 
     private void OnTrayIconVisibilityWatcherTick(object? sender, EventArgs e)
