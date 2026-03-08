@@ -12,6 +12,7 @@
     <DebugType>embedded</DebugType>
     <BaseOutputPath>..\..\build</BaseOutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>

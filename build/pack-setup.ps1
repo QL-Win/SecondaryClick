@@ -27,6 +27,8 @@ $sevenZip = Join-Path $globalPackages "micasetup.tools\2.5.0\build\bin\7z.exe"
 $makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.0\build\makemica.exe"
 
 # Update Git version info in source code
+Write-Host ("$tag")
+Write-Host ("$revision")
 $text | Out-File $PSScriptRoot\..\src\SecondaryClick\GitVersion.cs -Encoding utf8
 
 # Installer build settings
