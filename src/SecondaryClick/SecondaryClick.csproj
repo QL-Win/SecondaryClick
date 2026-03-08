@@ -20,7 +20,6 @@
   <ItemGroup>
     <None Remove="*.ico" />
     <Resource Include="*.ico" />
-    <Resource Remove="*Dark.ico" />
     <None Include="*.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
