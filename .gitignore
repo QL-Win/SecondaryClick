@@ -174,3 +174,6 @@ UpgradeLog*.txt
 
 # WiX toolset files
 C_SecondaryClickComponents.wxs
+
+# Build script files
+GitVersion.cs
