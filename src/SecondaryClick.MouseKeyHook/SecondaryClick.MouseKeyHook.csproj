@@ -7,5 +7,6 @@
     <AssemblyTitle>SecondaryClick.MouseKeyHook</AssemblyTitle>
     <AssemblyName>System.MouseKeyHook</AssemblyName>
     <RootNamespace>System.MouseKeyHook</RootNamespace>
+    <Platforms>x86;x64;ARM64</Platforms>
   </PropertyGroup>
 </Project>

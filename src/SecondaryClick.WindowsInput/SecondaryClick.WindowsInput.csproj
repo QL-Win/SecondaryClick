@@ -9,5 +9,6 @@
     <AssemblyTitle>SecondaryClick.WindowsInput</AssemblyTitle>
     <AssemblyName>System.WindowsInput</AssemblyName>
     <RootNamespace>System.WindowsInput</RootNamespace>
+    <Platforms>x86;x64;ARM64</Platforms>
   </PropertyGroup>
 </Project>

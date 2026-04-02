@@ -1,14 +1,25 @@
 <Solution>
-  <Project Path="src/SecondaryClick/SecondaryClick.csproj" />
+  <Project Path="src/SecondaryClick/SecondaryClick.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
   <Configurations>
-    <Platform Name="Any CPU" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
   <Project Path="src/SecondaryClick.Installer/SecondaryClick.Installer.wixproj" Id="f0214fc2-efbe-426c-842d-b42bc37d9525">
     <BuildDependency Project="src/SecondaryClick/SecondaryClick.csproj" />
     <Platform Project="x86" />
-    <Build />
+    <Build Solution="*|x86" />
   </Project>
-  <Project Path="src/SecondaryClick.MouseKeyHook/SecondaryClick.MouseKeyHook.csproj" />
-  <Project Path="src/SecondaryClick.WindowsInput/SecondaryClick.WindowsInput.csproj" />
+  <Project Path="src/SecondaryClick.MouseKeyHook/SecondaryClick.MouseKeyHook.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="src/SecondaryClick.WindowsInput/SecondaryClick.WindowsInput.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>
