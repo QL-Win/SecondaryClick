@@ -78,14 +78,14 @@ internal sealed partial class TrayIconManager : IDisposable
                             IsChecked = _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap,
                             IsEnabled = PrecisionTouchpadSPISettings.IsWritable,
                             IsVisible = PrecisionTouchpadRegistrySettings.IsReadable,
-                            Command = _ =>
+                            Command = new TrayCommand(_ =>
                             {
                                 if (PrecisionTouchpadSPISettings.IsWritable)
                                 {
                                     _recognizerHolder.TouchpadRecognizer.IsTwoFingerTap
                                         = !_recognizerHolder.TouchpadRecognizer.IsTwoFingerTap;
                                 }
-                            },
+                            }),
                         },
                         new TrayMenuItem
                         {
@@ -94,14 +94,14 @@ internal sealed partial class TrayIconManager : IDisposable
                             IsChecked = _recognizerHolder.TouchpadRecognizer.IsRightClickZone,
                             IsEnabled = PrecisionTouchpadSPISettings.IsWritable,
                             IsVisible = PrecisionTouchpadRegistrySettings.IsReadable,
-                            Command = _ =>
+                            Command = new TrayCommand(_ =>
                             {
                                 if (PrecisionTouchpadSPISettings.IsWritable)
                                 {
                                     _recognizerHolder.TouchpadRecognizer.IsRightClickZone
                                         = !_recognizerHolder.TouchpadRecognizer.IsRightClickZone;
                                 }
-                            },
+                            }),
                         },
                     ],
                 },
@@ -117,46 +117,46 @@ internal sealed partial class TrayIconManager : IDisposable
                             Tag = nameof(SH.ModifiersOff),
                             Header = SH.ModifiersOff,
                             IsChecked = false,
-                            Command =  _ =>
+                            Command = new TrayCommand(_ =>
                             {
                                 Configurations.ModifiersAlt.Set(false);
                                 Configurations.ModifiersControl.Set(false);
                                 Configurations.ModifiersShift.Set(false);
                                 ApplyModifierConfiguration();
-                            },
+                            }),
                         },
                         new TrayMenuItem
                         {
                             Tag = nameof(SH.ModifiersAlt),
                             Header = SH.ModifiersAlt,
                             IsChecked = Configurations.ModifiersAlt.Get(),
-                            Command =  _ =>
+                            Command = new TrayCommand(_ =>
                             {
                                 Configurations.ModifiersAlt.Set(!Configurations.ModifiersAlt.Get());
                                 ApplyModifierConfiguration();
-                            },
+                            }),
                         },
                         new TrayMenuItem
                         {
                             Tag = nameof(SH.ModifiersControl),
                             Header = SH.ModifiersControl,
                             IsChecked = Configurations.ModifiersControl.Get(),
-                            Command =  _ =>
+                            Command = new TrayCommand(_ =>
                             {
                                 Configurations.ModifiersControl.Set(!Configurations.ModifiersControl.Get());
                                 ApplyModifierConfiguration();
-                            },
+                            }),
                         },
                         new TrayMenuItem
                         {
                             Tag = nameof(SH.ModifiersShift),
                             Header = SH.ModifiersShift,
                             IsChecked = Configurations.ModifiersShift.Get(),
-                            Command =  _ =>
+                            Command = new TrayCommand(_ =>
                             {
                                 Configurations.ModifiersShift.Set(!Configurations.ModifiersShift.Get());
                                 ApplyModifierConfiguration();
-                            },
+                            }),
                         },
                     ]
                 },
@@ -166,19 +166,19 @@ internal sealed partial class TrayIconManager : IDisposable
                     Tag = nameof(SH.HideTrayIcon),
                     Header = SH.HideTrayIcon,
                     IsChecked = Configurations.HideTrayIcon.Get(),
-                    Command = static _ =>
+                    Command = new TrayCommand(static _ =>
                     {
                         bool nextState = !Configurations.HideTrayIcon.Get();
                         Configurations.HideTrayIcon.Set(nextState);
                         GetInstance().ApplyTrayIconVisibilityFromConfiguration();
-                    },
+                    }),
                 },
                 new TrayMenuItem
                 {
                     Tag = nameof(SH.StartWithWindows),
                     Header = SH.StartWithWindows,
                     IsChecked = StartupRegistrySettings.IsEnabled(),
-                    Command = static _ =>
+                    Command = new TrayCommand(static _ =>
                     {
                         bool nextState = !StartupRegistrySettings.IsEnabled();
                         if (StartupRegistrySettings.SetEnabled(nextState))
@@ -186,13 +186,13 @@ internal sealed partial class TrayIconManager : IDisposable
                             FindMenuItemByTag(GetInstance()._icon.Menu, nameof(SH.StartWithWindows))!.IsChecked
                                 = StartupRegistrySettings.IsEnabled();
                         }
-                    },
+                    }),
                 },
                 new TrayMenuItem
                 {
                     Tag = nameof(SH.Exit),
                     Header = SH.Exit,
-                    Command = static _ => Application.Current.Shutdown(),
+                    Command = new TrayCommand(static _ => Application.Current.Shutdown()),
                 }
             ],
         };

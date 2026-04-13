@@ -29,7 +29,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NativeTray" Version="1.0.0" />
+    <PackageReference Include="NativeTray" Version="2.0.2" />
     <PackageReference Include="MicaSetup.Tools" Version="2.5.0" />
   </ItemGroup>
 
