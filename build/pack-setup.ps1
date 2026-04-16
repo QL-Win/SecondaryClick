@@ -90,6 +90,7 @@ Remove-Item .\Package.7z -ErrorAction SilentlyContinue
 # Build EXE installer by MicaSetup
 & $makemicaPath micasetup.json
 
+Remove-Item SecondaryClick-$version.zip -ErrorAction SilentlyContinue
 Compress-Archive "$releaseDir\*" SecondaryClick-$version.zip
 Rename-Item .\SecondaryClick.exe SecondaryClick-$version.exe
 Rename-Item .\Package.7z SecondaryClick-$version.7z
