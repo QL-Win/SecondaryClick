@@ -195,10 +195,12 @@ internal sealed partial class TrayIconManager : IDisposable
                 {
                     Tag = nameof(SH.Exit),
                     Header = SH.Exit,
+#if false
                     Icon = new Win32Image(ResourceHelper.GetStream("pack://application:,,,/Assets/Images/ic_fluent_dismiss_16_regular.png"))
                     {
                         ShowAsMonochrome = true,
                     },
+#endif
                     Command = new TrayCommand(static _ => Application.Current.Shutdown()),
                 }
             ],
