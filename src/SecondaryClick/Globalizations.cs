@@ -229,7 +229,7 @@ internal static class Globalizations
             nameof(HideTrayIcon) => "Hide tray icon",
             nameof(AnotherInstanceRunning) => "Another SecondaryClick instance is already running",
             nameof(StartWithWindows) => "Start with Windows",
-            nameof(Exit) => "Exit",
+            nameof(Exit) => "Quit",
             _ => name,
         };
 
