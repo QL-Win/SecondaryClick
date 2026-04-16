@@ -29,8 +29,20 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NativeTray" Version="2.0.2" />
+    <PackageReference Include="NativeTray" Version="2.0.3" />
+    <PackageReference Include="FluentUI.SystemIcons.Assets" Version="1.1.323" />
     <PackageReference Include="MicaSetup.Tools" Version="2.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+	<Resource Include="$(NuGetPackageRoot)\FluentUI.SystemIcons.Assets\1.1.323\assets\png\FluentSystemIcons-Regular\*16*.png">
+      <Link>Assets\Images\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Resource>
+	-->
+    <Resource Include="$(NuGetPackageRoot)\FluentUI.SystemIcons.Assets\1.1.323\assets\png\FluentSystemIcons-Regular\ic_fluent_dismiss_16_regular.png">
+      <Link>Assets\Images\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

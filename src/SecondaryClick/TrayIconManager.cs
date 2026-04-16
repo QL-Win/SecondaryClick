@@ -4,9 +4,12 @@ using SecondaryClick.Gestures.Touchpads;
 using SecondaryClick.WinApi;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.IO.Packaging;
 using System.NativeTray;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Resources;
 using System.Windows.Threading;
 
 namespace SecondaryClick;
@@ -192,6 +195,10 @@ internal sealed partial class TrayIconManager : IDisposable
                 {
                     Tag = nameof(SH.Exit),
                     Header = SH.Exit,
+                    Icon = new Win32Image(ResourceHelper.GetStream("pack://application:,,,/Assets/Images/ic_fluent_dismiss_16_regular.png"))
+                    {
+                        ShowAsMonochrome = true,
+                    },
                     Command = new TrayCommand(static _ => Application.Current.Shutdown()),
                 }
             ],
@@ -388,5 +395,21 @@ internal sealed partial class TrayIconManager : IDisposable
         {
             return false;
         }
+    }
+}
+
+file static class ResourceHelper
+{
+    static ResourceHelper()
+    {
+        if (!UriParser.IsKnownScheme("pack"))
+            _ = PackUriHelper.UriSchemePack;
+    }
+
+    public static Stream GetStream(string uriString)
+    {
+        Uri uri = new(uriString);
+        StreamResourceInfo info = Application.GetResourceStream(uri);
+        return info?.Stream!;
     }
 }
