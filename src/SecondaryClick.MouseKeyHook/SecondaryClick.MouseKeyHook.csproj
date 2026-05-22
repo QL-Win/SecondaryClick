@@ -7,15 +7,16 @@
         <AssemblyTitle>SecondaryClick.MouseKeyHook</AssemblyTitle>
         <AssemblyName>System.MouseKeyHook</AssemblyName>
         <RootNamespace>System.MouseKeyHook</RootNamespace>
-        <PackageId>$(AssemblyName)</PackageId>
+        <PackageId>$(AssemblyTitle)</PackageId>
         <Platforms>x86;x64;ARM64</Platforms>
-        <Authors>ema</Authors>
-        <RepositoryUrl>https://github.com/emako/LiteObservableLogs</RepositoryUrl>
-        <PackageProjectUrl>https://github.com/emako/LiteObservableLogs</PackageProjectUrl>
+        <Authors>QL-Win</Authors>
+        <Company>QL-Win</Company>
+        <RepositoryUrl>https://github.com/QL-Win/SecondaryClick</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/QL-Win/SecondaryClick</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>log logger logging serilog-sink serilog</PackageTags>
+        <PackageTags>keyboard mouse hook</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Description>xxxx.</Description>
+        <Description>This library allows you to tap the keyboard and mouse, to detect and record their activity even when an application is inactive and runs in the background.</Description>
         <PackageIcon>Logo.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <DebugType>portable</DebugType>
@@ -25,4 +26,16 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\branding\Logo.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
 </Project>

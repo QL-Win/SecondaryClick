@@ -9,6 +9,35 @@
         <AssemblyTitle>SecondaryClick.WindowsInput</AssemblyTitle>
         <AssemblyName>System.WindowsInput</AssemblyName>
         <RootNamespace>System.WindowsInput</RootNamespace>
+        <PackageId>$(AssemblyTitle)</PackageId>
         <Platforms>x86;x64;ARM64</Platforms>
+        <Authors>QL-Win</Authors>
+        <Company>QL-Win</Company>
+        <RepositoryUrl>https://github.com/QL-Win/SecondaryClick</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/QL-Win/SecondaryClick</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>Keyboard Mouse Windows Simulate Simulator SendInput</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>Windows Input Simulator (C# SendInput Wrapper - Simulate Keyboard and Mouse)</Description>
+        <PackageIcon>Logo.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <IncludeSymbols>true</IncludeSymbols>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\branding\Logo.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
 </Project>
