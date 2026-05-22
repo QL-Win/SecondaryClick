@@ -1,52 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net48</TargetFramework>
-    <LangVersion>preview</LangVersion>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-    <UseWindowsForms>false</UseWindowsForms>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <DebugType>embedded</DebugType>
-    <BaseOutputPath>..\..\build</BaseOutputPath>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Platforms>x86;x64;ARM64</Platforms>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>preview</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+        <UseWindowsForms>false</UseWindowsForms>
+        <ApplicationIcon>logo.ico</ApplicationIcon>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <DebugType>embedded</DebugType>
+        <BaseOutputPath>..\..\build</BaseOutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <Platforms>x86;x64;ARM64</Platforms>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="*.ico" />
-    <Resource Include="*.ico" />
-    <None Include="*.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="*.ico" />
+        <Resource Include="*.ico" />
+        <None Include="*.bat">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Costura.Fody" Version="6.0.0" Condition=" '$(Configuration)' == 'Release'">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="NativeTray" Version="2.0.3" />
-    <PackageReference Include="FluentUI.SystemIcons.Assets" Version="1.1.323" />
-    <PackageReference Include="MicaSetup.Tools" Version="2.5.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Costura.Fody" Version="6.0.0" Condition=" '$(Configuration)' == 'Release'">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="NativeTray" Version="2.0.4" />
+        <PackageReference Include="FluentUI.SystemIcons.Assets" Version="1.1.323" />
+        <PackageReference Include="MicaSetup.Tools" Version="2.5.1" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <!--
-	<Resource Include="$(NuGetPackageRoot)\FluentUI.SystemIcons.Assets\1.1.323\assets\png\FluentSystemIcons-Regular\*16*.png">
-      <Link>Assets\Images\%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </Resource>
-	-->
-    <Resource Include="$(NuGetPackageRoot)\FluentUI.SystemIcons.Assets\1.1.323\assets\png\FluentSystemIcons-Regular\ic_fluent_dismiss_16_regular.png">
-      <Link>Assets\Images\%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </Resource>
-  </ItemGroup>
+    <ItemGroup>
+        <!--
+        <Resource Include="$(NuGetPackageRoot)\FluentUI.SystemIcons.Assets\1.1.323\assets\png\FluentSystemIcons-Regular\*16*.png">
+            <Link>Assets\Images\%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </Resource>
+        -->
+        <Resource Include="$(NuGetPackageRoot)\FluentUI.SystemIcons.Assets\1.1.323\assets\png\FluentSystemIcons-Regular\ic_fluent_dismiss_16_regular.png">
+            <Link>Assets\Images\%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </Resource>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SecondaryClick.MouseKeyHook\SecondaryClick.MouseKeyHook.csproj" />
-    <ProjectReference Include="..\SecondaryClick.WindowsInput\SecondaryClick.WindowsInput.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\SecondaryClick.MouseKeyHook\SecondaryClick.MouseKeyHook.csproj" />
+        <ProjectReference Include="..\SecondaryClick.WindowsInput\SecondaryClick.WindowsInput.csproj" />
+    </ItemGroup>
 </Project>
