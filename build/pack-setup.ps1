@@ -23,8 +23,8 @@ using System.Reflection;
 [assembly: AssemblyVersion("$tag")]
 [assembly: AssemblyInformationalVersion("$revision")]
 "@
-$sevenZip = Join-Path $globalPackages "micasetup.tools\2.5.0\build\bin\7z.exe"
-$makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.0\build\makemica.exe"
+$sevenZip = Join-Path $globalPackages "micasetup.tools\2.5.1\build\bin\7z.exe"
+$makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.1\build\makemica.exe"
 
 # Update Git version info in source code
 Write-Host ("$tag")
@@ -65,8 +65,8 @@ if ($LASTEXITCODE -ne 0) {
 # Rename MSI to include git version
 $msiPath = Join-Path $scriptRoot "SecondaryClick.msi"
 if (Test-Path $msiPath) {
-    Remove-Item "$scriptRoot\SecondaryClick-$version.msi" -ErrorAction SilentlyContinue
-    Rename-Item $msiPath "SecondaryClick-$version.msi"
+    Remove-Item "$scriptRoot\SecondaryClick-$version-x64.msi" -ErrorAction SilentlyContinue
+    Rename-Item $msiPath "SecondaryClick-$version-x64.msi"
 }
 
 # Build ZIP and 7Zip packages
@@ -90,10 +90,10 @@ Remove-Item .\Package.7z -ErrorAction SilentlyContinue
 # Build EXE installer by MicaSetup
 & $makemicaPath micasetup.json
 
-Remove-Item SecondaryClick-$version.zip -ErrorAction SilentlyContinue
-Compress-Archive "$releaseDir\*" SecondaryClick-$version.zip
-Rename-Item .\SecondaryClick.exe SecondaryClick-$version.exe
-Rename-Item .\Package.7z SecondaryClick-$version.7z
+Remove-Item SecondaryClick-$version-x64.zip -ErrorAction SilentlyContinue
+Compress-Archive "$releaseDir\*" SecondaryClick-$version-x64.zip
+Rename-Item .\SecondaryClick.exe SecondaryClick-$version-x64.exe
+Rename-Item .\Package.7z SecondaryClick-$version-x64.7z
 
 Write-Host "`nPress any key to exit..."
 [void][System.Console]::ReadKey($true)
