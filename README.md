@@ -46,6 +46,10 @@ If tray icon is hidden, run `RestoreTrayIcon.bat` from the app output folder to 
 
 Settings are saved per user and restored automatically on next launch.
 
+## Designer
+
+Application icon designed by [@Shomnipotence](https://github.com/Shomnipotence)
+
 ## License
 
 <img src="https://www.gnu.org/graphics/gplv3-127x51.png" alt="GPL v3">
