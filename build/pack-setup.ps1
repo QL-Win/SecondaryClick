@@ -57,6 +57,10 @@ if ([string]::IsNullOrWhiteSpace($env:WIX)) {
     throw "WIX environment variable is not set. This project's PreBuildEvent uses $(WIX)bin\heat."
 }
 
+####################################################
+# x86_x64 building
+####################################################
+
 & $msbuildExe $installerProject /t:Build /p:Configuration=Release /p:Platform=x86 /nologo
 if ($LASTEXITCODE -ne 0) {
     throw "Installer build failed: ${installerProject}"
@@ -94,6 +98,34 @@ Remove-Item "SecondaryClick-${version}-x86_x64.zip" -ErrorAction SilentlyContinu
 Compress-Archive "${releaseDir}\*" "SecondaryClick-${version}-x86_x64.zip"
 Rename-Item .\SecondaryClick.exe "SecondaryClick-${version}-x86_x64.exe" -ErrorAction SilentlyContinue
 Rename-Item .\Package.7z "SecondaryClick-${version}-x86_x64.7z" -ErrorAction SilentlyContinue
+
+####################################################
+# arm64 building
+####################################################
+
+# Build app output (used by both installer heat harvest and portable package)
+# Restore with Release configuration so conditional PackageReference entries (for example Costura.Fody) are included.
+dotnet restore $appProject -p:Configuration=Release -p:Platform=arm64
+dotnet build $appProject -c Release --no-restore -p:Platform=arm64
+
+# Build ZIP and 7Zip packages
+Set-Location $scriptRoot
+$releaseDir = Join-Path $scriptRoot "Release"
+
+if (-not (Test-Path $releaseDir)) {
+    throw "Release output folder not found: ${releaseDir}"
+}
+
+Remove-Item .\Package.7z -ErrorAction SilentlyContinue
+& $sevenZip a Package.7z "${releaseDir}\*" -t7z -mx=9 -ms=on -m0=lzma2 -mf=BCJ2 -r -y
+
+# Build EXE installer by MicaSetup
+& $makemicaPath micasetup.json
+
+Remove-Item "SecondaryClick-${version}-arm64.zip" -ErrorAction SilentlyContinue
+Compress-Archive "${releaseDir}\*" "SecondaryClick-${version}-arm64.zip"
+Rename-Item .\SecondaryClick.exe "SecondaryClick-${version}-arm64.exe" -ErrorAction SilentlyContinue
+Rename-Item .\Package.7z "SecondaryClick-${version}-arm64.7z" -ErrorAction SilentlyContinue
 
 Write-Host "`nPress any key to exit..."
 [void][System.Console]::ReadKey($true)
