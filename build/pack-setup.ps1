@@ -58,7 +58,7 @@ if ([string]::IsNullOrWhiteSpace($env:WIX)) {
 }
 
 ####################################################
-# x86_x64 building
+# app x86_x64 building
 ####################################################
 
 & $msbuildExe $installerProject /t:Build /p:Configuration=Release /p:Platform=x86 /nologo
@@ -100,7 +100,7 @@ Rename-Item .\SecondaryClick.exe "SecondaryClick-${version}-x86_x64.exe" -ErrorA
 Rename-Item .\Package.7z "SecondaryClick-${version}-x86_x64.7z" -ErrorAction SilentlyContinue
 
 ####################################################
-# arm64 building
+# app arm64 building
 ####################################################
 
 # Build app output (used by both installer heat harvest and portable package)
@@ -126,6 +126,24 @@ Remove-Item "SecondaryClick-${version}-arm64.zip" -ErrorAction SilentlyContinue
 Compress-Archive "${releaseDir}\*" "SecondaryClick-${version}-arm64.zip"
 Rename-Item .\SecondaryClick.exe "SecondaryClick-${version}-arm64.exe" -ErrorAction SilentlyContinue
 Rename-Item .\Package.7z "SecondaryClick-${version}-arm64.7z" -ErrorAction SilentlyContinue
+
+####################################################
+# nuget building
+####################################################
+
+$projects = @(
+    "..\src\SecondaryClick.MouseKeyHook",
+    "..\src\SecondaryClick.WindowsInput"
+)
+
+foreach ($proj in $projects) {
+    Push-Location $proj
+    Write-Host "Processing $proj..."
+    dotnet restore
+    dotnet build -c Release
+    dotnet pack -c Release -o ../../build/
+    Pop-Location
+}
 
 Write-Host "`nPress any key to exit..."
 [void][System.Console]::ReadKey($true)
