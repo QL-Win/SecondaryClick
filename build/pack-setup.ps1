@@ -24,7 +24,7 @@ using System.Reflection;
 [assembly: AssemblyInformationalVersion("$revision")]
 "@
 $sevenZip = Join-Path $globalPackages "micasetup.tools\2.5.1\build\bin\7z.exe"
-$makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.1\build\makemica.exe"
+$makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.0\build\makemica.exe"
 
 # Update Git version info in source code
 Write-Host ("$tag")
@@ -42,7 +42,7 @@ Set-Location $repoRoot
 dotnet restore $appProject -p:Configuration=Release
 dotnet build $appProject -c Release --no-restore
 
-# Build MSI installer
+# Build MSI installer (x86_x64)
 $vsWhereCmd = Get-Command vswhere.exe -ErrorAction SilentlyContinue
 if (-not $vsWhereCmd) {
     throw "vswhere.exe not found in PATH. Please install Visual Studio/Build Tools and ensure vswhere is available."
@@ -59,41 +59,41 @@ if ([string]::IsNullOrWhiteSpace($env:WIX)) {
 
 & $msbuildExe $installerProject /t:Build /p:Configuration=Release /p:Platform=x86 /nologo
 if ($LASTEXITCODE -ne 0) {
-    throw "Installer build failed: $installerProject"
+    throw "Installer build failed: ${installerProject}"
 }
 
 # Rename MSI to include git version
 $msiPath = Join-Path $scriptRoot "SecondaryClick.msi"
 if (Test-Path $msiPath) {
-    Remove-Item "$scriptRoot\SecondaryClick-$version-x64.msi" -ErrorAction SilentlyContinue
-    Rename-Item $msiPath "SecondaryClick-$version-x64.msi"
+    Remove-Item "${scriptRoot}\SecondaryClick-${version}-x86_x64.msi" -ErrorAction SilentlyContinue
 }
+Rename-Item $msiPath "SecondaryClick-${version}-x86_x64.msi" -ErrorAction SilentlyContinue
 
 # Build ZIP and 7Zip packages
 if (-not (Test-Path $sevenZip)) {
-    throw "7z.exe file not found: $sevenZip"
+    throw "7z.exe file not found: ${sevenZip}"
 }
 if (-not (Test-Path $makemicaPath)) {
-    throw "makemica.exe file not found: $makemicaPath"
+    throw "makemica.exe file not found: ${makemicaPath}"
 }
 
 Set-Location $scriptRoot
 $releaseDir = Join-Path $scriptRoot "Release"
 
 if (-not (Test-Path $releaseDir)) {
-    throw "Release output folder not found: $releaseDir"
+    throw "Release output folder not found: ${releaseDir}"
 }
 
 Remove-Item .\Package.7z -ErrorAction SilentlyContinue
-& $sevenZip a Package.7z "$releaseDir\*" -t7z -mx=9 -ms=on -m0=lzma2 -mf=BCJ2 -r -y
+& $sevenZip a Package.7z "${releaseDir}\*" -t7z -mx=9 -ms=on -m0=lzma2 -mf=BCJ2 -r -y
 
 # Build EXE installer by MicaSetup
 & $makemicaPath micasetup.json
 
-Remove-Item SecondaryClick-$version-x64.zip -ErrorAction SilentlyContinue
-Compress-Archive "$releaseDir\*" SecondaryClick-$version-x64.zip
-Rename-Item .\SecondaryClick.exe SecondaryClick-$version-x64.exe
-Rename-Item .\Package.7z SecondaryClick-$version-x64.7z
+Remove-Item "SecondaryClick-${version}-x86_x64.zip" -ErrorAction SilentlyContinue
+Compress-Archive "${releaseDir}\*" "SecondaryClick-${version}-x86_x64.zip"
+Rename-Item .\SecondaryClick.exe "SecondaryClick-${version}-x86_x64.exe" -ErrorAction SilentlyContinue
+Rename-Item .\Package.7z "SecondaryClick-${version}-x86_x64.7z" -ErrorAction SilentlyContinue
 
 Write-Host "`nPress any key to exit..."
 [void][System.Console]::ReadKey($true)
