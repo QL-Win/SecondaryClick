@@ -32,13 +32,13 @@ After launch, SecondaryClick runs in the system tray.
 
 - Right-click the tray icon to open settings
 - Enable or disable touchpad gestures:
-	- Two-finger tap
-	- Bottom-right click
+    - Two-finger tap
+    - Bottom-right click
 - Enable keyboard-assisted triggers:
-	- Off
-	- Alt Key
-	- Control Key
-	- Shift Key
+    - Off
+    - Alt Key
+    - Control Key
+    - Shift Key
 - Optional: enable Start with Windows from tray menu
 - Optional: hide tray icon from tray menu (`Hide tray icon`)
 
