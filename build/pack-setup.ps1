@@ -23,8 +23,8 @@ using System.Reflection;
 [assembly: AssemblyVersion("$tag")]
 [assembly: AssemblyInformationalVersion("$revision")]
 "@
-$sevenZip = Join-Path $globalPackages "micasetup.tools\2.5.1\build\bin\7z.exe"
-$makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.0\build\makemica.exe"
+$sevenZip = Join-Path $globalPackages "micasetup.tools\2.5.2\build\bin\7z.exe"
+$makemicaPath = Join-Path $globalPackages "micasetup.tools\2.5.2\build\makemica.exe"
 
 # Update Git version info in source code
 Write-Host ("$tag")

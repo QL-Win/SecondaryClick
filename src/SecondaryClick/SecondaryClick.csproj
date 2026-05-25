@@ -10,8 +10,12 @@
         <ApplicationIcon>logo.ico</ApplicationIcon>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <DebugType>embedded</DebugType>
-        <BaseOutputPath>..\..\build</BaseOutputPath>
+        <BaseOutputPath>..\..\build\</BaseOutputPath>
+        <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+        <OutputPath>$(BaseOutputPath)$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <Platforms>x86;x64;ARM64</Platforms>
     </PropertyGroup>
@@ -31,7 +35,7 @@
         </PackageReference>
         <PackageReference Include="NativeTray" Version="2.0.4" />
         <PackageReference Include="FluentUI.SystemIcons.Assets" Version="1.1.323" />
-        <PackageReference Include="MicaSetup.Tools" Version="2.5.1" />
+        <PackageReference Include="MicaSetup.Tools" Version="2.5.2" />
     </ItemGroup>
 
     <ItemGroup>
