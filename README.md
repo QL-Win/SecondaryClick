@@ -1,61 +1,89 @@
-![logo64](https://raw.githubusercontent.com/QL-Win/SecondaryClick/refs/heads/master/branding/Logo64.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/QL-Win/SecondaryClick/refs/heads/master/branding/Logo64.png" alt="SecondaryClick Logo" width="96" height="96">
+</p>
 
-[![GitHub license](https://img.shields.io/github/license/QL-Win/SecondaryClick)](https://github.com/QL-Win/SecondaryClick/blob/master/LICENSE-GPL.txt) [![Actions](https://github.com/QL-Win/SecondaryClick/actions/workflows/build.yml/badge.svg)](https://github.com/QL-Win/SecondaryClick/actions/workflows/build.yml) [![Platform](https://img.shields.io/badge/platform-Windows-blue?logo=windowsxp&color=1E9BFA)](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+<h1 align="center">🖱️ SecondaryClick</h1>
 
-# SecondaryClick
+<p align="center">
+  Bring macOS <strong>Secondary Click</strong> gestures to Windows.
+</p>
 
-Bring macOS “Secondary Click” gesture to Windows.
+<p align="center">
+  <img src="https://img.shields.io/github/license/QL-Win/SecondaryClick?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/github/actions/workflow/status/QL-Win/SecondaryClick/build.yml?style=for-the-badge&label=Build" alt="Build Status">
+  <img src="https://img.shields.io/badge/Platform-Windows-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="Platform">
+</p>
 
-SecondaryClick lets you perform right-click actions from touchpad gestures and optional keyboard modifiers.
+---
 
-## Features
+SecondaryClick lets you perform right-click actions using touchpad gestures and optional keyboard modifiers.
 
-- Secondary click support for touchpads
-- Two-finger tap
-- Bottom-right click zone
-- Optional keyboard modifier triggers (`Alt`, `Control`, `Shift`)
-- Lightweight system tray app
+## ✨ Features
 
-## Requirements
+* 🖱️ Secondary click support for touchpads
+* 👆👆 Two-finger tap
+* 📍 Bottom-right click zone
+* ⌨️ Optional keyboard modifier triggers (`Alt`, `Control`, `Shift`)
+* 🚀 Lightweight system tray app
 
-- Windows with a touchpad
-- .NET Framework 4.8 runtime
-- Precision touchpad is recommended for full touchpad options
+## 📋 Requirements
 
-## Install
+* 💻 Windows with a touchpad
+* ⚙️ .NET Framework 4.8 runtime
+* 🎯 Precision touchpad recommended for full touchpad functionality
 
-Download the latest build from [Releases](https://github.com/QL-Win/SecondaryClick/releases).
+## 📦 Install
 
-## Usage
+Download the latest build from **[Releases](https://github.com/QL-Win/SecondaryClick/releases)**.
+
+## 🚀 Usage
 
 After launch, SecondaryClick runs in the system tray.
 
-- Right-click the tray icon to open settings
-- Enable or disable touchpad gestures:
-    - Two-finger tap
-    - Bottom-right click
-- Enable keyboard-assisted triggers:
-    - Off
-    - Alt Key
-    - Control Key
-    - Shift Key
-- Optional: enable Start with Windows from tray menu
-- Optional: hide tray icon from tray menu (`Hide tray icon`)
+### 👆 Touchpad Gestures
 
-If tray icon is hidden, run `RestoreTrayIcon.bat` from the app output folder to restore it.
+Enable or disable:
 
-Settings are saved per user and restored automatically on next launch.
+* 👆👆 Two-finger tap
+* 📍 Bottom-right click
 
-## Designer
+### ⌨️ Keyboard-Assisted Triggers
 
-Application icon designed by [@Shomnipotence](https://github.com/Shomnipotence)
+Choose one of:
 
-## License
+*  Off
+*  `Alt` Key
+*  `Control` Key
+*  `Shift` Key
 
-<img src="https://www.gnu.org/graphics/gplv3-127x51.png" alt="GPL v3">
+### ⚙️ Additional Options
 
-`SecondaryClick` is free and open source software under [GPL-3.0](https://opensource.org/licenses/GPL-3.0).
+* 🖱️ Right-click the tray icon to open settings
+* 🔄 Enable **Start with Windows** from the tray menu
+* 👻 Hide the tray icon using **Hide tray icon**
 
-`SecondaryClick.MouseKeyHook` is based on [MouseKeyHook](https://github.com/gmamaladze/globalmousekeyhook) and distributed under [MIT](https://github.com/gmamaladze/globalmousekeyhook#MIT-1-ov-file).
+If the tray icon is hidden, run:
 
-`SecondaryClick.WindowsInput` is based on [InputSimulator](https://github.com/michaelnoonan/inputsimulator) and distributed under [MIT](https://github.com/michaelnoonan/inputsimulator?tab=MIT-1-ov-file#readme).
+```bat
+RestoreTrayIcon.bat
+```
+
+from the application output folder to restore it.
+
+💾 Settings are saved per user and automatically restored on the next launch.
+
+## 🎨 Designer
+
+Application icon designed by **[@Shomnipotence](https://github.com/Shomnipotence)**.
+
+## 📜 License
+
+<p align="center">
+  <img src="https://www.gnu.org/graphics/gplv3-127x51.png" alt="GPL v3">
+</p>
+
+🔓 `SecondaryClick` is free and open-source software licensed under **GPL-3.0**.
+
+🔧 `SecondaryClick.MouseKeyHook` is based on **MouseKeyHook** and distributed under the **MIT License**.
+
+🔧 `SecondaryClick.WindowsInput` is based on **InputSimulator** and distributed under the **MIT License**.
